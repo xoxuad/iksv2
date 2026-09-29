@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
   <title>Atelier IKS</title>
   <link rel="icon" type="image/jpeg" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
-  <!-- No external Supabase SDK â€” using hand-rolled REST+WebSocket client to avoid DataCloneError -->
+  <!-- No external Supabase SDK using hand-rolled REST+WebSocket client to avoid DataCloneError -->
   <style>
 /* ============================================
    IKS ATELIER - ENHANCED CSS
@@ -896,7 +896,7 @@ button:disabled {
         <div class="form-grid">
 		
 		<div class="field-wide" style="margin-bottom: 20px;">
-		  <label>Qui dÃ©clare la panne ? (OpÃ©rateur / Chef de ligne)</label>
+		  <label>Qui déclare la panne ? (Opérateur / Chef de ligne)</label>
 		  <div id="touchOperatorPicker" class="issue-touch-grid"></div>
 		  <input type="hidden" id="operator" value="Auto-Declaration" />
 		  <div id="operatorSelectedFeedback" class="touch-selected-badge" style="display:none; margin-top: 10px;"></div>
@@ -904,7 +904,7 @@ button:disabled {
 		
 	
           <div class="field-wide">
-            <label>SÃ©lection de la Machine</label>
+            <label>Sélection de la Machine</label>
             <div id="touchMachinePicker" class="touch-grid-container"></div>
             <input type="hidden" id="machine" />
             <div id="machineSelectedFeedback" class="touch-selected-badge" style="display:none;"></div>
@@ -917,28 +917,28 @@ button:disabled {
           </div> -->
 
           <div class="field-wide">
-            <label>Type de panne (Toucher pour sÃ©lectionner)</label>
+            <label>Type de panne (Toucher pour sélectionner)</label>
             <!-- Touch issue picker grid -->
             <div id="touchIssuePicker" class="issue-touch-grid"></div>
 
             <!-- Hidden fields kept for JS compat -->
             <div id="issuePicker" style="display:none;flex-direction:column;gap:8px;">
               <div id="pieceSearchContainer" style="position:relative;">
-                <input id="pieceSearch" autocomplete="off" placeholder="ðŸ” Chercher une piÃ¨ce..." style="width:100%;padding:11px 12px;font-size:14px;border:1px solid #cbd5e1;border-radius:12px;outline:none;" oninput="filterPieceList()" onfocus="showPieceDropdown()" />
+                <input id="pieceSearch" autocomplete="off" placeholder="ðŸ” Chercher une pièce..." style="width:100%;padding:11px 12px;font-size:14px;border:1px solid #cbd5e1;border-radius:12px;outline:none;" oninput="filterPieceList()" onfocus="showPieceDropdown()" />
                 <div id="pieceDropdown" style="display:none;position:absolute;z-index:200;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 8px 24px rgba(15,23,42,0.12);max-height:220px;overflow-y:auto;"></div>
               </div>
               <div id="pieceSelectedBadge" style="display:none;padding:6px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:13px;font-weight:700;color:#1d4ed8;align-items:center;justify-content:space-between;">
                 <span id="pieceSelectedLabel"></span>
-                <button type="button" onclick="clearPieceSelection()" style="border:none;background:none;color:#64748b;font-size:16px;cursor:pointer;padding:0 4px;line-height:1;">âœ•</button>
+                <button type="button" onclick="clearPieceSelection()" style="border:none;background:none;color:#64748b;font-size:16px;cursor:pointer;padding:0 4px;line-height:1;">/button>
               </div>
               <div id="problemeBlock" style="display:none;">
                 <select id="issue" onchange="toggleIssueAutre()" style="width:100%;padding:11px 12px;font-size:14px;border:1px solid #cbd5e1;border-radius:12px;outline:none;">
-                  <option value="">Choisir le problÃ¨me</option>
+                  <option value="">Choisir le problème</option>
                 </select>
               </div>
-              <input id="issue_autre" class="hidden" style="margin-top:0;" placeholder="DÃ©crire le problÃ¨me en dÃ©tail" />
+              <input id="issue_autre" class="hidden" style="margin-top:0;" placeholder="Décrire le problème en détail" />
               <div id="saveNewProblemBlock" style="display:none;padding:10px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;font-size:13px;">
-                <strong>ðŸ’¾ Enregistrer ce problÃ¨me sous <span id="saveNewProblemPiece"></span> ?</strong>
+                <strong>ðŸ’¾ Enregistrer ce problème sous <span id="saveNewProblemPiece"></span> ?</strong>
                 <div style="display:flex;gap:8px;margin-top:8px;">
                   <button type="button" class="small-btn success" onclick="saveNewProblemToCatalogue()">Oui, ajouter</button>
                   <button type="button" class="small-btn" onclick="dismissSaveNewProblem()">Non merci</button>
@@ -1106,9 +1106,9 @@ button:disabled {
             <h2 class="section-title">Suivi detaille des demandes</h2>
             <p class="section-copy">La liste complete reste disponible pour les responsables atelier et maintenance.</p>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; align-items:center;">
-              <button class="small-btn" onclick="exportTicketsXLS()" style="display:flex;align-items:center;gap:6px;">â¬‡ï¸ Exporter les interventions (.xls)</button>
+              <button class="small-btn" onclick="exportTicketsXLS()" style="display:flex;align-items:center;gap:6px;">¸ Exporter les interventions (.xls)</button>
               <label style="margin:0; cursor:pointer;">
-                <span class="small-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;font-size:12px;color:#1d4ed8;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;font-weight:700;cursor:pointer;">â¬†ï¸ Importer des interventions (.xls)</span>
+                <span class="small-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;font-size:12px;color:#1d4ed8;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;font-weight:700;cursor:pointer;">¸ Importer des interventions (.xls)</span>
                 <input id="importTicketsFile" type="file" accept=".xls,.xlsx" style="display:none;" onchange="importTicketsXLS(event)" />
               </label>
               <span id="importTicketsFeedback" style="font-size:12px;color:#15803d;display:none;"></span>
@@ -1147,13 +1147,13 @@ button:disabled {
           </div>
         </div>
 
-        <!-- â”€â”€ KPI row 1 : existing indicators â”€â”€ -->
+        <!-- ”€ KPI row 1 : existing indicators ”€ -->
         <div class="stats indicator-kpis" style="grid-template-columns: repeat(4, minmax(0,1fr));">
           <div class="stat">
             <div class="stat-label kpi-tooltip-wrap">
               TTR moyen
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Time To Repair â€” durÃ©e moyenne entre le dÃ©but de l'intervention (startedAt) et sa clÃ´ture (closedAt).</div>
+              <div class="kpi-tooltip-bubble">Time To Repair durée moyenne entre le début de l'intervention (startedAt) et sa clôture (closedAt).</div>
             </div>
             <div id="indicatorAvgTTR" class="indicator-kpi-value">0 min 0 s</div>
           </div>
@@ -1161,7 +1161,7 @@ button:disabled {
             <div class="stat-label kpi-tooltip-wrap">
               TTF moyen
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Time To Failure â€” durÃ©e moyenne entre deux pannes consÃ©cutives sur la mÃªme machine.</div>
+              <div class="kpi-tooltip-bubble">Time To Failure durée moyenne entre deux pannes consécutives sur la même machine.</div>
             </div>
             <div id="indicatorAvgTTF" class="indicator-kpi-value">0 min 0 s</div>
           </div>
@@ -1169,7 +1169,7 @@ button:disabled {
             <div class="stat-label kpi-tooltip-wrap">
               Response Time
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">DÃ©lai moyen entre la dÃ©claration de panne (createdAt) et la prise en charge par le mÃ©canicien (startedAt).</div>
+              <div class="kpi-tooltip-bubble">Délai moyen entre la déclaration de panne (createdAt) et la prise en charge par le mécanicien (startedAt).</div>
             </div>
             <div id="indicatorAvgResponse" class="indicator-kpi-value">0 min 0 s</div>
           </div>
@@ -1179,39 +1179,39 @@ button:disabled {
           </div>
         </div>
 
-        <!-- â”€â”€ KPI row 2 : new advanced indicators â”€â”€ -->
+        <!-- ”€ KPI row 2 : new advanced indicators ”€ -->
         <div class="stats indicator-kpis" style="grid-template-columns: repeat(4, minmax(0,1fr)); margin-bottom: 18px;">
           <div class="stat" style="border-top: 3px solid #1d4ed8;">
             <div class="stat-label kpi-tooltip-wrap">
               MTBF
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Mean Time Between Failures â€” temps moyen de fonctionnement entre deux pannes. CalculÃ© sur l'ensemble du parc : Temps total opÃ©ration / Nombre de pannes.</div>
+              <div class="kpi-tooltip-bubble">Mean Time Between Failures temps moyen de fonctionnement entre deux pannes. Calculé sur l'ensemble du parc : Temps total opération / Nombre de pannes.</div>
             </div>
-            <div id="indicatorMTBF" class="indicator-kpi-value" style="font-size:22px;">â€”</div>
+            <div id="indicatorMTBF" class="indicator-kpi-value" style="font-size:22px;">/div>
           </div>
           <div class="stat" style="border-top: 3px solid #0f766e;">
             <div class="stat-label kpi-tooltip-wrap">
               MTTR
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Mean Time To Repair â€” temps moyen de rÃ©paration. CalculÃ© sur toutes les interventions clÃ´turÃ©es : Total temps rÃ©paration / Nombre de rÃ©parations.</div>
+              <div class="kpi-tooltip-bubble">Mean Time To Repair temps moyen de réparation. Calculé sur toutes les interventions clôturées : Total temps réparation / Nombre de réparations.</div>
             </div>
-            <div id="indicatorMTTR" class="indicator-kpi-value" style="font-size:22px;">â€”</div>
+            <div id="indicatorMTTR" class="indicator-kpi-value" style="font-size:22px;">/div>
           </div>
           <div class="stat" style="border-top: 3px solid #15803d;">
             <div class="stat-label kpi-tooltip-wrap">
-              TD (DisponibilitÃ©)
+              TD (Disponibilité)
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Taux de DisponibilitÃ© â€” pourcentage de temps oÃ¹ les machines sont opÃ©rationnelles. Formule : MTBF / (MTBF + MTTR) Ã— 100.</div>
+              <div class="kpi-tooltip-bubble">Taux de Disponibilité pourcentage de temps où les machines sont opérationnelles. Formule : MTBF / (MTBF + MTTR) Ã— 100.</div>
             </div>
-            <div id="indicatorTD" class="indicator-kpi-value" style="font-size:22px;">â€”</div>
+            <div id="indicatorTD" class="indicator-kpi-value" style="font-size:22px;">/div>
           </div>
           <div class="stat" style="border-top: 3px solid #b45309;">
             <div class="stat-label kpi-tooltip-wrap">
               IPR
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Indice de Performance de RÃ©paration â€” rapport MTBF/MTTR. Plus la valeur est Ã©levÃ©e, plus les pannes sont rares par rapport au temps de rÃ©paration.</div>
+              <div class="kpi-tooltip-bubble">Indice de Performance de Réparation rapport MTBF/MTTR. Plus la valeur est élevée, plus les pannes sont rares par rapport au temps de réparation.</div>
             </div>
-            <div id="indicatorIPR" class="indicator-kpi-value" style="font-size:22px;">â€”</div>
+            <div id="indicatorIPR" class="indicator-kpi-value" style="font-size:22px;">/div>
           </div>
         </div>
 
@@ -1252,21 +1252,21 @@ button:disabled {
           </div>
         </div>
       </div>
-      <!-- â•â• TRANSPORT TAB â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+      <!-- • TRANSPORT TAB ••••••••••••••••••••••••• -->
       <div id="transportTabPanel" class="tab-panel">
 
         <!-- Request form card -->
         <div class="panel" style="margin-bottom:18px;">
           <div class="panel-inner">
             <h2 class="section-title">Demande de Transport</h2>
-            <p class="section-copy">Le dÃ©clarant signale qu'une machine doit Ãªtre dÃ©placÃ©e. La demande sera soumise Ã  validation admin avant affectation.</p>
+            <p class="section-copy">Le déclarant signale qu'une machine doit être déplacée. La demande sera soumise Ã  validation admin avant affectation.</p>
             <div class="form-grid" style="grid-template-columns:1fr 1fr;gap:14px;">
               <div class="field-wide">
                 <label>Nom de la machine</label>
                 <input id="transportMachineName" placeholder="Ex: PIQ-1, BROD-3..." list="machines" autocomplete="off" />
               </div>
               <div class="field-wide">
-                <label>DÃ©clarant (Qui demande le transport ?)</label>
+                <label>Déclarant (Qui demande le transport ?)</label>
                 <div id="transportOperatorGrid" class="issue-touch-grid" style="margin-top:4px;"></div>
                 <input type="hidden" id="transportOperator" value="" />
                 <div id="transportOperatorFeedback" class="touch-selected-badge" style="display:none;margin-top:8px;"></div>
@@ -1274,7 +1274,7 @@ button:disabled {
             </div>
             <div class="actions" style="margin-top:16px;">
               <button type="button" class="primary" onclick="submitTransportRequest()">ðŸ“¤ Soumettre la demande</button>
-              <button type="button" class="secondary" onclick="resetTransportForm()">RÃ©initialiser</button>
+              <button type="button" class="secondary" onclick="resetTransportForm()">Réinitialiser</button>
             </div>
           </div>
         </div>
@@ -1287,7 +1287,7 @@ button:disabled {
             </div>
             <div class="workspace-bar-actions">
               <button class="ghost-btn" onclick="openTransportAdminAccess()">ðŸ” Administration Transport</button>
-              <button id="transportAdminLogoutBtn" class="ghost-btn hidden" onclick="logoutTransportAdmin()">DÃ©connexion</button>
+              <button id="transportAdminLogoutBtn" class="ghost-btn hidden" onclick="logoutTransportAdmin()">Déconnexion</button>
             </div>
           </div>
           <div class="workspace-body">
@@ -1295,7 +1295,7 @@ button:disabled {
           </div>
         </div>
       </div>
-      <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+      <!-- •••••••••••••••••••••••••••••••••-->
 
     </section>
   </main>
@@ -1303,12 +1303,12 @@ button:disabled {
   <!-- Transport admin password modal -->
   <div id="transportAdminModal" class="modal-backdrop">
     <div class="modal">
-      <h3>ðŸ” AccÃ¨s Administration Transport</h3>
+      <h3>ðŸ” Accès Administration Transport</h3>
       <p>Saisissez le mot de passe pour valider ou rejeter les demandes de transport.</p>
       <div class="modal-grid">
         <div>
           <label for="transportAdminPassword">Mot de passe</label>
-          <input id="transportAdminPassword" type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+          <input id="transportAdminPassword" type="password" placeholder="€¢€¢€¢€¢"
             onkeydown="if(event.key==='Enter') unlockTransportAdmin()" />
         </div>
       </div>
@@ -1480,10 +1480,10 @@ button:disabled {
 
   <div id="editInterventionModal" class="modal-backdrop">
     <div class="modal" style="max-width: 480px;">
-      <h3>âœï¸ Modifier les horaires</h3>
+      <h3>¸ Modifier les horaires</h3>
       <p>Corrigez les dates et heures de cette intervention. Les calculs de temps seront mis a jour automatiquement.</p>
       <div class="edit-warning">
-        âš ï¸ Cette modification est tracee dans le journal de bord. Ne corriger que les vraies erreurs de saisie.
+        ï¸ Cette modification est tracee dans le journal de bord. Ne corriger que les vraies erreurs de saisie.
       </div>
       <div class="modal-grid">
         <div class="edit-modal-section">
@@ -1497,7 +1497,7 @@ button:disabled {
           <div class="helper">Heure a laquelle le mecanicien a commence l'intervention.</div>
         </div>
         <div id="editClosedAtBlock" class="edit-modal-section">
-          <h4>âœ… Date et heure de cloture</h4>
+          <h4>Date et heure de cloture</h4>
           <input id="editClosedAt" type="datetime-local" />
           <div class="helper">Heure a laquelle l'intervention a ete terminee.</div>
         </div>
@@ -1514,31 +1514,31 @@ button:disabled {
       <div class="admin-panel-top" style="flex-shrink:0;">
         <div>
           <h3 class="section-title" style="margin-bottom:0;">ðŸ”§ Catalogue des pannes</h3>
-          <p style="margin:4px 0 0;font-size:13px;color:#64748b;">GÃ©rez les piÃ¨ces et leurs problÃ¨mes associÃ©s. Structure: PiÃ¨ce â†’ ProblÃ¨mes.</p>
+          <p style="margin:4px 0 0;font-size:13px;color:#64748b;">Gérez les pièces et leurs problèmes associés. Structure: Pièce Problèmes.</p>
         </div>
         <button class="secondary" onclick="closeIssueTypeManagerModal()">Fermer</button>
       </div>
       <div style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:14px;flex:1;min-height:0;overflow:hidden;padding:0 0 4px;">
         <!-- Left: piece list -->
         <div style="display:flex;flex-direction:column;gap:8px;min-height:0;">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;">PiÃ¨ces</div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;">Pièces</div>
           <div id="cataloguePieceList" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding-right:2px;"></div>
           <!-- Add piece form -->
           <div style="padding:10px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;flex-shrink:0;">
-            <input id="newPieceInput" placeholder="Nouvelle piÃ¨ce..." style="width:100%;padding:8px 10px;font-size:13px;border:1px solid #cbd5e1;border-radius:8px;outline:none;" onkeydown="if(event.key==='Enter') addNewPiece();" />
-            <button class="primary" onclick="addNewPiece()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;">âž• Ajouter</button>
+            <input id="newPieceInput" placeholder="Nouvelle pièce..." style="width:100%;padding:8px 10px;font-size:13px;border:1px solid #cbd5e1;border-radius:8px;outline:none;" onkeydown="if(event.key==='Enter') addNewPiece();" />
+            <button class="primary" onclick="addNewPiece()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;">Ajouter</button>
           </div>
         </div>
         <!-- Right: problems for selected piece -->
         <div style="display:flex;flex-direction:column;gap:8px;min-height:0;">
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;">ProblÃ¨mes <span id="catalogueSelectedPieceLabel" style="color:#1d4ed8;font-weight:800;"></span></div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;">Problèmes <span id="catalogueSelectedPieceLabel" style="color:#1d4ed8;font-weight:800;"></span></div>
           <div id="catalogueProblemList" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding-right:2px;">
-            <div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;">â† SÃ©lectionnez une piÃ¨ce</div>
+            <div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;">Sélectionnez une pièce</div>
           </div>
           <!-- Add problem form -->
           <div id="addProblemForm" style="display:none;padding:10px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0;flex-shrink:0;">
-            <input id="newProblemInput" placeholder="Nouveau problÃ¨me..." style="width:100%;padding:8px 10px;font-size:13px;border:1px solid #cbd5e1;border-radius:8px;outline:none;" onkeydown="if(event.key==='Enter') addNewProblem();" />
-            <button class="primary" onclick="addNewProblem()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;background:linear-gradient(135deg,#15803d,#22c55e);">âž• Ajouter ce problÃ¨me</button>
+            <input id="newProblemInput" placeholder="Nouveau problème..." style="width:100%;padding:8px 10px;font-size:13px;border:1px solid #cbd5e1;border-radius:8px;outline:none;" onkeydown="if(event.key==='Enter') addNewProblem();" />
+            <button class="primary" onclick="addNewProblem()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;background:linear-gradient(135deg,#15803d,#22c55e);">Ajouter ce problème</button>
           </div>
         </div>
       </div>
@@ -1549,7 +1549,7 @@ button:disabled {
     </div>
   </div>
 
-  <!-- â•â• SUPABASE CONFIG BANNER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- • SUPABASE CONFIG BANNER ••••••••••••••••••••• -->
   <div id="supabaseBanner" style="
     position:fixed;inset:0;z-index:99999;
     background:rgba(15,23,42,0.82);backdrop-filter:blur(8px);
@@ -1563,12 +1563,11 @@ button:disabled {
         <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#60a5fa);display:grid;place-items:center;font-size:22px;flex-shrink:0;">ðŸ”Œ</div>
         <div>
           <h2 style="margin:0;font-size:20px;color:#0f172a;">Connexion Supabase</h2>
-          <p style="margin:0;font-size:13px;color:#64748b;">IKS Maintenance â€” stockage cloud</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">IKS Maintenance stockage cloud</p>
         </div>
       </div>
       <p style="font-size:13px;color:#475569;margin:14px 0 20px;line-height:1.6;">
-        Renseignez vos identifiants Supabase. Vous les trouverez dans votre dashboard Supabase â†’
-        <strong>Project Settings â†’ API</strong>.
+        Renseignez vos identifiants Supabase. Vous les trouverez dans votre dashboard Supabase         <strong>Project Settings API</strong>.
       </p>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <div>
@@ -1587,26 +1586,25 @@ button:disabled {
           Se connecter
         </button>
         <p style="font-size:11px;color:#94a3b8;text-align:center;margin:0;">
-          Vos identifiants sont stockÃ©s localement dans ce navigateur.
+          Vos identifiants sont stockés localement dans ce navigateur.
         </p>
       </div>
     </div>
   </div>
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ••••••••••••••••••••••••••••••••• -->
 
   <script>
 
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // MINI SUPABASE CLIENT â€” plain fetch + WebSocket, no SDK, no DataCloneError
+  // •••••••••••••••••••••••••••••••••••••
+  // MINI SUPABASE CLIENT plain fetch + WebSocket, no SDK, no DataCloneError
   // Implements: .from(table).select/insert/update/delete/eq/neq/gte/order/
   //             limit/single/maybeSingle()  +  .channel().on().subscribe()
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // •••••••••••••••••••••••••••••••••••••
   function createSupabaseClient(projectUrl, anonKey) {
     var baseUrl = projectUrl.replace(/\/$/, '');
     var headers = { 'apikey': anonKey, 'Authorization': 'Bearer ' + anonKey, 'Content-Type': 'application/json', 'Prefer': '' };
 
-    // â”€â”€ REST query builder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    function QueryBuilder(table) {
+    // ”€ REST query builder ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    function QueryBuilder(table) {
       this._table   = table;
       this._method  = 'GET';
       this._body    = null;
@@ -1698,8 +1696,7 @@ button:disabled {
       }
     };
 
-    // â”€â”€ Realtime via raw WebSocket â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    function RealtimeChannel(name, client) {
+    // ”€ Realtime via raw WebSocket ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    function RealtimeChannel(name, client) {
       this._name = name;
       this._client = client;
       this._listeners = [];
@@ -1779,8 +1776,7 @@ button:disabled {
       return this;
     };
 
-    // â”€â”€ Public client object â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    var _channels = [];
+    // ”€ Public client object ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    var _channels = [];
     return {
       from: function(table) { return new QueryBuilder(table); },
       channel: function(name) {
@@ -1795,13 +1791,11 @@ button:disabled {
       }
     };
   }
-  // â•â• END MINI CLIENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    // â•â• SUPABASE LAYER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    var _supabase = null;
+  // • END MINI CLIENT •••••••••••••••••••••••••••    // • SUPABASE LAYER •••••••••••••••••••••••••    var _supabase = null;
     var _supabaseReady = false;
     var _realtimeChannel = null;
 
-    // Table names (create these in Supabase â€” see SQL below)
+    // Table names (create these in Supabase see SQL below)
     const SB_TICKETS       = 'iks_tickets';
     const SB_TECHNICIANS   = 'iks_technicians';
     const SB_OPERATORS     = 'iks_operators';
@@ -1834,7 +1828,7 @@ button:disabled {
         return;
       }
 
-      document.getElementById('sbConnectBtn').textContent = 'Connexionâ€¦';
+      document.getElementById('sbConnectBtn').textContent = 'Connexion;
       document.getElementById('sbConnectBtn').disabled = true;
 
       try {
@@ -1851,7 +1845,7 @@ button:disabled {
         await initAppFromSupabase();
         subscribeRealtime();
       } catch (err) {
-        errEl.textContent = 'Erreur de connexion : ' + (err.message || 'vÃ©rifiez vos identifiants.');
+        errEl.textContent = 'Erreur de connexion : ' + (err.message || 'vérifiez vos identifiants.');
         errEl.style.display = 'block';
         document.getElementById('sbConnectBtn').textContent = 'Se connecter';
         document.getElementById('sbConnectBtn').disabled = false;
@@ -1880,8 +1874,8 @@ button:disabled {
       toggleIssueAutre();
       renderTouchMachinePicker();
       renderTouchIssuePicker();
-      addLog('Application connectÃ©e Ã  Supabase.');
-      addLog('Le mur des mÃ©caniciens est prÃªt.');
+      addLog('Application connectée Ã  Supabase.');
+      addLog('Le mur des mécaniciens est prêt.');
       if (shouldRunSelfTests()) runSelfTests();
       render();
       resetIndicatorImportForm();
@@ -1894,7 +1888,7 @@ button:disabled {
 	  if (!container) return;
 
 	  if (!operators.length) {
-		container.innerHTML = '<div style="color:#94a3b8;font-size:14px;padding:12px 0;">Aucun opÃ©rateur configurÃ©.</div>';
+		container.innerHTML = '<div style="color:#94a3b8;font-size:14px;padding:12px 0;">Aucun opérateur configuré.</div>';
 		return;
 	  }
 
@@ -1913,7 +1907,7 @@ button:disabled {
 	  
 	  var fb = byId('operatorSelectedFeedback');
 	  if (fb) {
-		fb.innerHTML = 'ðŸ‘¤ DÃ©clarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearOperatorSelection()">âœ•</button>';
+		fb.innerHTML = 'ðŸ‘¤ Déclarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearOperatorSelection()">/button>';
 		fb.style.display = 'flex';
 	  }
 	  
@@ -1960,7 +1954,7 @@ button:disabled {
 		});
 	}
 
-    // â”€â”€ Supabase CRUD helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ”€ Supabase CRUD helpers ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
 
     async function sbLoadState() {
 	  try {
@@ -2032,13 +2026,13 @@ button:disabled {
 		}
 
 		if (res.error) {
-		  console.error("âŒ Supabase Error:", res.error);
+		  console.error("Supabase Error:", res.error);
 		  alert("Erreur DB: " + res.error.message);
 		} else {
 		  if (!ticket._sbId && res.data && res.data[0]) {
 			ticket._sbId = res.data[0].id;
 		  }
-		  console.log("âœ… Sync Successful");
+		  console.log("Sync Successful");
 		}
 	  } catch (err) {
 		console.error('sbSaveTicket crash:', err);
@@ -2117,7 +2111,7 @@ button:disabled {
 			  operator: r.operator_name || '' 
 			}; 
 		  });
-		  console.log("âœ… Loaded from DB:", machines);
+		  console.log("Loaded from DB:", machines);
 		} else {
 		  machines = [];
 		}
@@ -2141,10 +2135,10 @@ button:disabled {
 		if (rows.length > 0) {
 		  const { error } = await _supabase.from('iks_machines').insert(rows);
 		  if (error) throw error;
-		  console.log("âœ… Saved to DB:", rows);
+		  console.log("Saved to DB:", rows);
 		}
 	  } catch (err) { 
-		console.error('âŒ Save Failed:', err.message); 
+		console.error('Save Failed:', err.message); 
 	  }
 	}
 
@@ -2162,7 +2156,7 @@ button:disabled {
 
 		  _rebuildFlatIssueTypes(); 
 		  
-		  console.log("âœ… Catalogue loaded from DB");
+		  console.log("Catalogue loaded from DB");
 		}
 	  } catch (err) { 
 		console.warn('sbLoadIssueTypes error', err); 
@@ -2273,7 +2267,7 @@ button:disabled {
         }
       } catch(e) {}
     }());
-    // â•â• END SUPABASE LAYER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // • END SUPABASE LAYER ••••••••••••••••••••••••
 
     const DEFAULT_TECHNICIANS = [
       { id: '3833', name: 'Mohmed Yassine', role: 'Technicien machine a coudre', shift: 'Equipe A', initials: 'MY', colorA: '#1d4ed8', colorB: '#60a5fa' },
@@ -2322,7 +2316,7 @@ button:disabled {
       'Alimentation':     ['Panne electrique', 'Disjoncteur', 'Coupure reseau'],
       'Aspiration':       ['Obstruction', 'Faible debit', 'Bruit anormal'],
       'Mecanisme':        ['Blocage machine', 'Jeu excessif', 'Vibrations', 'Bruit anormal'],
-      'Qualite couture':  ['Point sautÃ©', 'Couture irreguliere', 'Mauvaise tension', 'Dechirure tissu'],
+      'Qualite couture':  ['Point sauté', 'Couture irreguliere', 'Mauvaise tension', 'Dechirure tissu'],
       'Bobine':           ['Tension incorrecte', 'Mauvais enroulement', 'Blocage'],
       'Courroie':         ['Usure', 'Casse', 'Glissement'],
       'Autre piece':      []
@@ -2455,7 +2449,7 @@ button:disabled {
       }, 0) + 1;
     }
 
-    // â”€â”€ localStorage â†’ Supabase adapters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ”€ localStorage Supabase adapters ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
     function saveTechnicians() { sbSaveTechnicians(); }
     function saveOperators()   { sbSaveOperators(); }
     function saveMachines()    { sbSaveMachines(); }
@@ -2850,7 +2844,7 @@ button:disabled {
 
     function importMachines(sourceEntries, sourceLabel) {
 	  if (!sourceEntries.length) {
-		alert('Aucune machine exploitable n\'a Ã©tÃ© trouvÃ©e dans ' + sourceLabel + '.');
+		alert('Aucune machine exploitable n\'a été trouvée dans ' + sourceLabel + '.');
 		return null;
 	  }
 
@@ -2889,7 +2883,7 @@ button:disabled {
 		render(); 
 	  }
 
-	  byId('machineImportSummary').textContent = 'Import terminÃ©. ' + getMachineImportSummaryText(summary);
+	  byId('machineImportSummary').textContent = 'Import terminé. ' + getMachineImportSummaryText(summary);
 	  return summary;
 	}
 
@@ -2981,7 +2975,7 @@ button:disabled {
 	}
 
     function loadState() {
-      // Data already loaded from Supabase during init â€” always return true to skip seedDemoData
+      // Data already loaded from Supabase during init always return true to skip seedDemoData
       return tickets.length > 0;
     }
 
@@ -3027,7 +3021,7 @@ button:disabled {
         if (draft.machine) {
           var fb = byId('machineSelectedFeedback');
           if (fb) {
-            fb.innerHTML = 'âœ… Machine : <strong>' + escapeHtml(draft.machine) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">âœ•</button>';
+            fb.innerHTML = 'Machine : <strong>' + escapeHtml(draft.machine) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">/button>';
             fb.style.display = 'flex';
           }
         }
@@ -3130,7 +3124,7 @@ button:disabled {
           return;
         }
       }
-      // Fallback: treat as legacy flat value â€” try to find which piece it belongs to
+      // Fallback: treat as legacy flat value try to find which piece it belongs to
       var foundPiece = null;
       Object.keys(issueCatalogue).forEach(function(p) {
         if (issueCatalogue[p].some(function(prob) { return (p + ' - ' + prob) === flatValue; })) {
@@ -3236,8 +3230,7 @@ button:disabled {
       if (typeof renderTouchIssuePicker === 'function') renderTouchIssuePicker();
     }
 
-    // â”€â”€ Two-level picker state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    var _selectedPiece = '';
+    // ”€ Two-level picker state ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    var _selectedPiece = '';
     var _pieceDropdownOpen = false;
 
     function _getPieceNames() {
@@ -3245,7 +3238,7 @@ button:disabled {
     }
 
     function renderPiecePicker() {
-      // Nothing to render into DOM on initial load â€” picker is event-driven.
+      // Nothing to render into DOM on initial load picker is event-driven.
       // Just reset state if no piece selected.
       if (!_selectedPiece) {
         _clearPickerUI();
@@ -3259,7 +3252,7 @@ button:disabled {
       byId('pieceSelectedBadge').style.display = 'none';
       byId('problemeBlock').style.display = 'none';
       byId('issue').value = '';
-      byId('issue').innerHTML = '<option value="">Choisir le problÃ¨me</option>';
+      byId('issue').innerHTML = '<option value="">Choisir le problème</option>';
       byId('issue_autre').classList.add('hidden');
       byId('issue_autre').value = '';
       byId('saveNewProblemBlock').style.display = 'none';
@@ -3297,8 +3290,8 @@ button:disabled {
     function _renderPieceDropdown(pieces, q) {
       var dd = byId('pieceDropdown');
       if (!pieces.length) {
-        dd.innerHTML = '<div style="padding:12px 14px;color:#64748b;font-size:13px;">Aucune piÃ¨ce trouvÃ©e</div>' +
-          '<div style="padding:0 12px 12px;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;">âž• Ajouter une nouvelle piÃ¨ce</button></div>';
+        dd.innerHTML = '<div style="padding:12px 14px;color:#64748b;font-size:13px;">Aucune pièce trouvée</div>' +
+          '<div style="padding:0 12px 12px;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;">Ajouter une nouvelle pièce</button></div>';
         return;
       }
       dd.innerHTML = pieces.map(function(p) {
@@ -3308,10 +3301,10 @@ button:disabled {
         var safeArg = p.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         return '<div class="piece-option" onclick="selectPiece(\'' + safeArg + '\')" style="padding:10px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #f1f5f9;">' +
           '<span style="font-weight:700;font-size:14px;">' + highlighted + '</span>' +
-          '<span style="font-size:12px;color:#64748b;">' + problems.length + ' problÃ¨me(s)</span>' +
+          '<span style="font-size:12px;color:#64748b;">' + problems.length + ' problème(s)</span>' +
           '</div>';
       }).join('') +
-      '<div style="padding:8px 12px;border-top:1px solid #f1f5f9;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;font-size:12px;">âž• Nouvelle piÃ¨ce</button></div>';
+      '<div style="padding:8px 12px;border-top:1px solid #f1f5f9;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;font-size:12px;">Nouvelle pièce</button></div>';
     }
 
     window.selectPiece = function selectPiece(pieceName) {
@@ -3324,13 +3317,13 @@ button:disabled {
       var badge = byId('pieceSelectedBadge');
       badge.style.display = 'flex';
       byId('pieceSelectedLabel').textContent = 'ðŸ”§ ' + pieceName;
-      // Populate problÃ¨me dropdown
+      // Populate problème dropdown
       var problems = (issueCatalogue[pieceName] || []).slice();
-      var opts = '<option value="">Choisir le problÃ¨me</option>';
+      var opts = '<option value="">Choisir le problème</option>';
       problems.forEach(function(prob) {
         opts += '<option value="' + escapeHtml(pieceName + ' - ' + prob) + '">' + escapeHtml(prob) + '</option>';
       });
-      opts += '<option value="Autre">Autre problÃ¨me...</option>';
+      opts += '<option value="Autre">Autre problème...</option>';
       byId('issue').innerHTML = opts;
       byId('issue').value = '';
       byId('problemeBlock').style.display = 'block';
@@ -3372,7 +3365,7 @@ button:disabled {
       var list = byId('cataloguePieceList');
       var pieces = Object.keys(issueCatalogue);
       if (!pieces.length) {
-        list.innerHTML = '<div style="color:#94a3b8;font-size:13px;text-align:center;padding:16px 0;">Aucune piÃ¨ce.</div>';
+        list.innerHTML = '<div style="color:#94a3b8;font-size:13px;text-align:center;padding:16px 0;">Aucune pièce.</div>';
         return;
       }
       list.innerHTML = pieces.map(function(p) {
@@ -3382,7 +3375,7 @@ button:disabled {
           '<span>' + escapeHtml(p) + '</span>' +
           '<span style="display:flex;align-items:center;gap:4px;">' +
             '<span style="font-size:11px;color:#64748b;">' + (issueCatalogue[p] || []).length + '</span>' +
-            (p !== 'Autre piece' ? '<button type="button" onclick="removePiece(\'' + safeP + '\');event.stopPropagation();" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 2px;line-height:1;" title="Supprimer">âœ•</button>' : '') +
+            (p !== 'Autre piece' ? '<button type="button" onclick="removePiece(\'' + safeP + '\');event.stopPropagation();" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 2px;line-height:1;" title="Supprimer">/button>' : '') +
           '</span>' +
         '</div>';
       }).join('');
@@ -3395,15 +3388,15 @@ button:disabled {
       var addForm = byId('addProblemForm');
       if (!piece) {
         if (pLabel) pLabel.textContent = '';
-        pList.innerHTML = '<div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;">â† SÃ©lectionnez une piÃ¨ce</div>';
+        pList.innerHTML = '<div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;">Sélectionnez une pièce</div>';
         if (addForm) addForm.style.display = 'none';
         return;
       }
-      if (pLabel) pLabel.textContent = 'â€“ ' + piece;
+      if (pLabel) pLabel.textContent = '' + piece;
       if (addForm) addForm.style.display = 'block';
       var problems = issueCatalogue[piece] || [];
       if (!problems.length) {
-        pList.innerHTML = '<div style="color:#94a3b8;font-size:13px;padding:16px 0;text-align:center;">Aucun problÃ¨me. Ajoutez-en un ci-dessous.</div>';
+        pList.innerHTML = '<div style="color:#94a3b8;font-size:13px;padding:16px 0;text-align:center;">Aucun problème. Ajoutez-en un ci-dessous.</div>';
         return;
       }
       pList.innerHTML = problems.map(function(prob, idx) {
@@ -3411,7 +3404,7 @@ button:disabled {
         var safeProb = prob.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         return '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-radius:10px;background:#fff;border:1px solid #e2e8f0;font-size:13px;">' +
           '<span>' + escapeHtml(prob) + '</span>' +
-          '<button type="button" onclick="removeProblem(\'' + safePiece + '\',\'' + safeProb + '\')" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 4px;line-height:1;" title="Supprimer">âœ•</button>' +
+          '<button type="button" onclick="removeProblem(\'' + safePiece + '\',\'' + safeProb + '\')" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 4px;line-height:1;" title="Supprimer">/button>' +
         '</div>';
       }).join('');
     }
@@ -3426,8 +3419,8 @@ button:disabled {
 
     window.addNewPiece = function addNewPiece() {
       var val = (byId('newPieceInput').value || '').trim();
-      if (!val) { alert('Merci de saisir le nom de la piÃ¨ce.'); return; }
-      if (issueCatalogue[val]) { alert('Cette piÃ¨ce existe dÃ©jÃ .'); return; }
+      if (!val) { alert('Merci de saisir le nom de la pièce.'); return; }
+      if (issueCatalogue[val]) { alert('Cette pièce existe déjÃ .'); return; }
       issueCatalogue[val] = [];
       saveIssueTypes();
       populateIssueTypeSelects();
@@ -3438,7 +3431,7 @@ button:disabled {
     };
 
     window.removePiece = function removePiece(pieceName) {
-      if (!confirm('Supprimer la piÃ¨ce "' + pieceName + '" et tous ses problÃ¨mes ?')) return;
+      if (!confirm('Supprimer la pièce "' + pieceName + '" et tous ses problèmes ?')) return;
       delete issueCatalogue[pieceName];
       if (_catalogueActivePiece === pieceName) _catalogueActivePiece = null;
       saveIssueTypes();
@@ -3450,10 +3443,10 @@ button:disabled {
     window.addNewProblem = function addNewProblem() {
       var piece = _catalogueActivePiece;
       var val = (byId('newProblemInput').value || '').trim();
-      if (!piece) { alert('SÃ©lectionnez une piÃ¨ce d\'abord.'); return; }
-      if (!val) { alert('Merci de saisir le problÃ¨me.'); return; }
+      if (!piece) { alert('Sélectionnez une pièce d\'abord.'); return; }
+      if (!val) { alert('Merci de saisir le problème.'); return; }
       if (!issueCatalogue[piece]) issueCatalogue[piece] = [];
-      if (issueCatalogue[piece].includes(val)) { alert('Ce problÃ¨me existe dÃ©jÃ .'); return; }
+      if (issueCatalogue[piece].includes(val)) { alert('Ce problème existe déjÃ .'); return; }
       issueCatalogue[piece].push(val);
       saveIssueTypes();
       populateIssueTypeSelects();
@@ -3471,7 +3464,7 @@ button:disabled {
       renderCatalogueProblemList();
     };
 
-    function renderIssueTypeList() { /* legacy stub â€” catalogue replaces this */ }
+    function renderIssueTypeList() { /* legacy stub catalogue replaces this */ }
 
     window.openIssueTypeManagerModal = function openIssueTypeManagerModal() {
       _catalogueActivePiece = _catalogueActivePiece || Object.keys(issueCatalogue)[0] || null;
@@ -3495,7 +3488,7 @@ button:disabled {
       populateIssueTypeSelects();
     };
 
-    window.saveIssueType = function saveIssueType() { /* legacy stub â€” use addNewProblem() */ };
+    window.saveIssueType = function saveIssueType() { /* legacy stub use addNewProblem() */ };
 
     function updateClock() {
       byId('currentTime').textContent = new Date().toLocaleTimeString('fr-FR', {
@@ -3632,18 +3625,16 @@ button:disabled {
         .slice(0, limit);
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       NEW KPI FUNCTIONS â€” MTBF Â· MTTR Â· TD Â· IPR
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-
+    /* •••••••••••••••••••••••••••       NEW KPI FUNCTIONS MTBF Â· MTTR Â· TD Â· IPR
+       •••••••••••••••••••••••••••
        Timestamps used:
-         createdAt  â†’ failure time
-         startedAt  â†’ intervention start
-         closedAt   â†’ intervention end
+         createdAt  failure time
+         startedAt  intervention start
+         closedAt   intervention end
 
        Repair Time   = closedAt  - startedAt
        Inter-failure = next createdAt - previous closedAt (or previous createdAt if no closedAt)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    •••••••••••••••••••••••••••*/
 
     /**
      * computeAdvancedKPIs(records)
@@ -3675,7 +3666,7 @@ button:disabled {
       // Fall back to full dataset when no month slice is supplied
       var scopeRecords = (monthRecords && monthRecords.length) ? monthRecords : allRecords;
 
-      // â”€â”€ MTTR : closed tickets in the selected month â”€â”€
+      // ”€ MTTR : closed tickets in the selected month ”€
       var repairTimes = scopeRecords.filter(function(r) {
         return r.startedAt && r.closedAt && r.closedAt > r.startedAt;
       }).map(function(r) {
@@ -3686,7 +3677,7 @@ button:disabled {
         ? Math.round(repairTimes.reduce(function(s, v) { return s + v; }, 0) / repairTimes.length)
         : 0;
 
-      // â”€â”€ MTBF : inter-failure intervals anchored to the selected month â”€â”€
+      // ”€ MTBF : inter-failure intervals anchored to the selected month ”€
       // Build a set of IDs from scopeRecords for quick lookup
       var scopeIds = {};
       scopeRecords.forEach(function(r) { if (r.id) scopeIds[r.id] = true; });
@@ -3716,7 +3707,7 @@ button:disabled {
         ? Math.round(allOperatingIntervals.reduce(function(s, v) { return s + v; }, 0) / allOperatingIntervals.length)
         : 0;
 
-      // â”€â”€ TD and IPR â”€â”€
+      // ”€ TD and IPR ”€
       // Use null to distinguish "not enough data" from a genuine 0 value
       var tdPct = (mtbfMs && mttrMs) ? (mtbfMs / (mtbfMs + mttrMs)) * 100
                 : (mtbfMs ? 100 : null);
@@ -3732,7 +3723,7 @@ button:disabled {
 
     /**
      * computeMachineKPIs(records)
-     * Returns a map { machineName â†’ { mtbfMs, mttrMs, tdPct, ipr, failureCount, isDecreasing } }
+     * Returns a map { machineName { mtbfMs, mttrMs, tdPct, ipr, failureCount, isDecreasing } }
      * Used for per-machine health classification and maintenance decision.
      *
      * "isDecreasing MTBF" is detected by comparing:
@@ -3803,13 +3794,13 @@ button:disabled {
 
     /**
      * getMachineMaintenanceDecision(machineKpi, globalMtbfMs, globalMttrMs)
-     * Returns { type, label, cssClass } where type âˆˆ 'corrective'|'predictive'|'inefficace'|'stable'
+     * Returns { type, label, cssClass } where type 'corrective'|'predictive'|'inefficace'|'stable'
      *
      * Rules (applied in priority order):
-     *  1. MTTR high (>2Ã— global MTTR)          â†’ "Maintenance inefficace"
-     *  2. MTBF low (< 50% global) AND â‰¥3 fails  â†’ "Maintenance corrective"
-     *  3. MTBF decreasing trend                 â†’ "Maintenance prÃ©dictive"
-     *  4. Otherwise                             â†’ "Stable"
+     *  1. MTTR high (>2Ã— global MTTR)          "Maintenance inefficace"
+     *  2. MTBF low (< 50% global) AND fails  "Maintenance corrective"
+     *  3. MTBF decreasing trend                 "Maintenance prédictive"
+     *  4. Otherwise                             "Stable"
      */
     function getMachineMaintenanceDecision(machineKpi, globalMtbfMs, globalMttrMs) {
       var highMttrThreshold  = globalMttrMs  ? globalMttrMs  * 2 : 0;
@@ -3822,7 +3813,7 @@ button:disabled {
         return { type: 'corrective', label: 'Corrective requise', cssClass: 'maint-chip corrective' };
       }
       if (machineKpi.isDecreasing) {
-        return { type: 'predictive', label: 'PrÃ©dictive recommandÃ©e', cssClass: 'maint-chip predictive' };
+        return { type: 'predictive', label: 'Prédictive recommandée', cssClass: 'maint-chip predictive' };
       }
       return { type: 'stable', label: 'Stable', cssClass: 'maint-chip' };
     }
@@ -3831,18 +3822,18 @@ button:disabled {
      * getMachineHealthStatus(tdPct)
      * Returns { label, cssClass } based on Availability Rate thresholds.
      *
-     *  TD â‰¥ 90%        â†’ "Bonne disponibilitÃ©"   (green)
-     *  70% â‰¤ TD < 90%  â†’ "Surveillance requise"  (amber)
-     *  TD < 70%        â†’ "Maintenance urgente"   (red)
+     *  TD 90%        "Bonne disponibilité"   (green)
+     *  70% TD < 90%  "Surveillance requise"  (amber)
+     *  TD < 70%        "Maintenance urgente"   (red)
      */
     function getMachineHealthStatus(tdPct) {
-      if (tdPct == null) return { label: 'DonnÃ©es insuffisantes', cssClass: 'health-chip' };
-      if (tdPct >= 90) return { label: 'Bonne disponibilitÃ©', cssClass: 'health-chip health-good' };
+      if (tdPct == null) return { label: 'Données insuffisantes', cssClass: 'health-chip' };
+      if (tdPct >= 90) return { label: 'Bonne disponibilité', cssClass: 'health-chip health-good' };
       if (tdPct >= 70) return { label: 'Surveillance requise', cssClass: 'health-chip health-warn' };
       return { label: 'Maintenance urgente', cssClass: 'health-chip health-urgent' };
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* •••••••••••••••••••••••••••*/
 
     function buildMachineTtfStats(records) {
       const byMachine = {};
@@ -4137,7 +4128,7 @@ button:disabled {
               '<div class="ticket-actions">' +
                 (ticket.status === 'Ouvert' ? '<button class="small-btn" onclick="startTicket(\'' + ticket.id + '\')">Affecter</button>' : '') +
                 (ticket.status === 'En cours' ? '<button class="small-btn success" onclick="closeTicket(\'' + ticket.id + '\')">Cloturer</button>' : '') +
-                (ticket.status !== 'Ouvert' ? '<button class="small-btn edit" onclick="openEditIntervention(\'' + ticket.id + '\')">âœï¸ Modifier les horaires</button>' : '') +
+                (ticket.status !== 'Ouvert' ? '<button class="small-btn edit" onclick="openEditIntervention(\'' + ticket.id + '\')">¸ Modifier les horaires</button>' : '') +
                 '<button class="small-btn danger-soft" onclick="deleteTicket(\'' + ticket.id + '\')">ðŸ—‘ï¸ Supprimer</button>' +
               '</div>' +
             '</div>' +
@@ -4209,12 +4200,12 @@ button:disabled {
       if (countBadge) countBadge.textContent = referenceMonthRecords.length ? referenceMonthRecords.length + ' intervention(s)' : 'Aucune donnee';
       byId('indicatorTopMachinesTitle').textContent = 'Machines anormales - ' + formatMonthLabel(referenceDate);
 
-      // â”€â”€ New advanced KPIs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ”€ New advanced KPIs ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
       var advKpi = computeAdvancedKPIs(indicatorRecords, referenceMonthRecords);
-      byId('indicatorMTBF').textContent = advKpi.mtbfMs != null ? formatDurationSmart(advKpi.mtbfMs) : 'â€”';
-      byId('indicatorMTTR').textContent = advKpi.mttrMs != null ? formatDurationSmart(advKpi.mttrMs) : 'â€”';
-      byId('indicatorTD').textContent   = advKpi.tdPct  != null ? advKpi.tdPct.toFixed(1) + ' %'     : 'â€”';
-      byId('indicatorIPR').textContent  = advKpi.ipr    != null ? advKpi.ipr.toFixed(2)               : 'â€”';
+      byId('indicatorMTBF').textContent = advKpi.mtbfMs != null ? formatDurationSmart(advKpi.mtbfMs) : ';
+      byId('indicatorMTTR').textContent = advKpi.mttrMs != null ? formatDurationSmart(advKpi.mttrMs) : ';
+      byId('indicatorTD').textContent   = advKpi.tdPct  != null ? advKpi.tdPct.toFixed(1) + ' %'     : ';
+      byId('indicatorIPR').textContent  = advKpi.ipr    != null ? advKpi.ipr.toFixed(2)               : ';
 
       // Color the TD value by health threshold
       var tdEl = byId('indicatorTD');
@@ -4272,7 +4263,7 @@ button:disabled {
           }).join('')
         : '<div class="empty-state">Les recommandations apparaitront automatiquement avec les donnees.</div>';
 
-      // â”€â”€ Machines anormales enrichies (health + maintenance decision) â”€â”€
+      // ”€ Machines anormales enrichies (health + maintenance decision) ”€
       var machineKpiMap = computeMachineKPIs(indicatorRecords);
       byId('indicatorTopMachines').innerHTML = abnormalMachines.length
         ? abnormalMachines.map(function(item, index) {
@@ -4283,7 +4274,7 @@ button:disabled {
             var mtbfText = mkpi && mkpi.mtbfMs != null ? formatDurationSmart(mkpi.mtbfMs) : null;
             var baselineText = item.baseline
               ? item.baseline.toFixed(1).replace('.', ',') + ' / mois en moyenne'
-              : 'pas d\'historique antÃ©rieur';
+              : 'pas d\'historique antérieur';
 
             return '' +
               '<div class="ranking-item">' +
@@ -4401,7 +4392,7 @@ button:disabled {
 
 	  if (!container) return;
 	  if (!machines.length) {
-		container.innerHTML = '<div class="empty-state">Aucune machine configurÃ©e.</div>';
+		container.innerHTML = '<div class="empty-state">Aucune machine configurée.</div>';
 		return;
 	  }
 
@@ -4411,7 +4402,7 @@ button:disabled {
 		
 		var isSelected = !!selectedMachineKeys[mName.toLowerCase()];
 
-		var opOptions = '<option value="">(Pas d\'opÃ©rateur)</option>' + 
+		var opOptions = '<option value="">(Pas d\'opérateur)</option>' + 
 		  operators.map(function(op) {
 			return `<option value="${escapeHtml(op)}" ${mOp === op ? 'selected' : ''}>${escapeHtml(op)}</option>`;
 		  }).join('');
@@ -4433,7 +4424,7 @@ button:disabled {
 			  </select>
 			</div>
 
-			<button class="small-btn danger-soft" onclick="removeMachine(${index})" title="Supprimer dÃ©finitivement">ðŸ—‘ï¸</button>
+			<button class="small-btn danger-soft" onclick="removeMachine(${index})" title="Supprimer définitivement">ðŸ—‘ï¸</button>
 		  </div>`;
 	  }).join('');
 	}
@@ -4852,11 +4843,11 @@ button:disabled {
     window.removeSelectedMachines = function() {
 	  const selectedCount = Object.keys(selectedMachineKeys).length;
 	  if (selectedCount === 0) {
-		alert("Veuillez sÃ©lectionner au moins une machine.");
+		alert("Veuillez sélectionner au moins une machine.");
 		return;
 	  }
 
-	  if (!confirm("Voulez-vous supprimer les " + selectedCount + " machines sÃ©lectionnÃ©es ?")) {
+	  if (!confirm("Voulez-vous supprimer les " + selectedCount + " machines sélectionnées ?")) {
 		return;
 	  }
 
@@ -5223,7 +5214,7 @@ button:disabled {
 	  const selectedIssue = byId('issue').value;
 	  const issueDetail = getIssueValue();
 
-	  if (!operator || operator === 'Auto-Declaration') { alert('Veuillez choisir un dÃ©clarant.'); return; }
+	  if (!operator || operator === 'Auto-Declaration') { alert('Veuillez choisir un déclarant.'); return; }
 	  if (!machine) { alert('Veuillez choisir une machine.'); return; }
 	  if (!selectedIssue) { alert('Veuillez choisir une panne.'); return; }
 
@@ -5608,7 +5599,7 @@ button:disabled {
       if (ticket.closedAt) ticket.closedAt = newClosedAt;
 
       if (changes.length > 0) {
-        addLog('Correction horaires intervention ' + ticket.id + ' â€” ' + changes.join(', ') + '.');
+        addLog('Correction horaires intervention ' + ticket.id + ' ' + changes.join(', ') + '.');
       }
 
       cancelEditIntervention();
@@ -5813,7 +5804,7 @@ button:disabled {
 		  render();
 
 		  var feedback = byId('importTicketsFeedback');
-		  feedback.textContent = 'âœ… ' + added + ' intervention(s) importee(s)' + (skipped ? ', ' + skipped + ' ignoree(s) (doublons)' : '') + '.';
+		  feedback.textContent = '' + added + ' intervention(s) importee(s)' + (skipped ? ', ' + skipped + ' ignoree(s) (doublons)' : '') + '.';
 		  feedback.style.display = 'inline';
 		  setTimeout(function() { feedback.style.display = 'none'; }, 5000);
 
@@ -5870,7 +5861,7 @@ button:disabled {
       }
     };
 
-    // â”€â”€ Touch Machine Picker â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ”€ Touch Machine Picker ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
     var _touchSelectedLetter = null;
 
     function renderTouchMachinePicker() {
@@ -5884,7 +5875,7 @@ button:disabled {
 		container.innerHTML = `
 		  <div style="padding: 20px; border: 2px dashed #cbd5e1; border-radius: 16px; text-align: center; color: #64748b;">
 			<span style="font-size: 24px; display: block; margin-bottom: 8px;">ðŸ‘¤</span>
-			Veuillez d'abord sÃ©lectionner <strong>qui dÃ©clare la panne</strong>.
+			Veuillez d'abord sélectionner <strong>qui déclare la panne</strong>.
 		  </div>`;
 		return;
 	  }
@@ -5896,7 +5887,7 @@ button:disabled {
 	  if (!filtered.length) {
 		container.innerHTML = `
 		  <div style="padding: 20px; border: 2px solid #fee2e2; background: #fffafb; border-radius: 16px; text-align: center; color: #b91c1c;">
-			Aucune machine n'est assignÃ©e Ã  <strong>${escapeHtml(selectedOp)}</strong>.
+			Aucune machine n'est assignée Ã  <strong>${escapeHtml(selectedOp)}</strong>.
 		  </div>`;
 		return;
 	  }
@@ -5983,7 +5974,7 @@ button:disabled {
 	  
 	  var fb = byId('machineSelectedFeedback');
 	  if (fb) {
-		fb.innerHTML = 'âœ… Machine : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">âœ•</button>';
+		fb.innerHTML = 'Machine : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">/button>';
 		fb.style.display = 'flex';
 	  }
 	};
@@ -5996,7 +5987,7 @@ button:disabled {
       if (fb) fb.style.display = 'none';
     };
 
-    // â”€â”€ Touch Issue Picker â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ”€ Touch Issue Picker ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
     var _touchSelectedPiece = null;
 
     function renderTouchIssuePicker() {
@@ -6019,8 +6010,8 @@ button:disabled {
         // Show back button + problem tiles
         var problems = issueCatalogue[_touchSelectedPiece] || [];
         var currentIssue = byId('issue').value;
-        var html = '<button type="button" class="touch-back-btn" onclick="touchClearPiece()">â† Retour</button>';
-        html += '<div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:8px;">ðŸ”§ ' + escapeHtml(_touchSelectedPiece) + ' â€” Choisir le problÃ¨me :</div>';
+        var html = '<button type="button" class="touch-back-btn" onclick="touchClearPiece()">Retour</button>';
+        html += '<div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:8px;">ðŸ”§ ' + escapeHtml(_touchSelectedPiece) + ' Choisir le problème :</div>';
         html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">';
         problems.forEach(function(prob) {
           var fullVal = _touchSelectedPiece + ' - ' + prob;
@@ -6062,7 +6053,7 @@ button:disabled {
       // Show feedback badge
       var fb = byId('issueSelectedFeedback');
       if (fb) {
-        fb.innerHTML = 'âœ… Panne : <strong>' + escapeHtml(fullVal) + '</strong> <button class="touch-clear-btn" onclick="touchClearPiece()">âœ•</button>';
+        fb.innerHTML = 'Panne : <strong>' + escapeHtml(fullVal) + '</strong> <button class="touch-clear-btn" onclick="touchClearPiece()">/button>';
         fb.style.display = 'flex';
       }
       // Update tile active states
@@ -6071,13 +6062,13 @@ button:disabled {
       });
     };
 
-    // Bootstrap is handled asynchronously by connectSupabase() â†’ initAppFromSupabase()
+    // Bootstrap is handled asynchronously by connectSupabase() initAppFromSupabase()
     // The Supabase banner is shown on load; credentials auto-connect if previously saved.
     // Initialize clock immediately so it ticks while Supabase connects:
     updateClock();
     setInterval(updateClock, 1000);
 
-    // â•â• NOTIFICATION SYSTEM â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // • NOTIFICATION SYSTEM •••••••••••••••••••••••••
 
     var _notifToastTimer = null;
 
@@ -6099,7 +6090,7 @@ button:disabled {
     }
 
     function sendBrowserNotif(title, body) {
-	  showNotifToast('ðŸ”” ' + title + ' â€” ' + body);
+	  showNotifToast('ðŸ”” ' + title + ' ' + body);
 
 	  if (!("Notification" in window)) return;
 
@@ -6121,7 +6112,7 @@ button:disabled {
 	  }
 	}
 
-    // â•â• TRANSPORT MODULE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // • TRANSPORT MODULE ••••••••••••••••••••••••••
     var isTransportAdminUnlocked = false;
     var TRANSPORT_ADMIN_PASSWORD = 'prod123';
 
@@ -6131,7 +6122,7 @@ button:disabled {
       if (!container) return;
       var currentOp = byId('transportOperator').value;
       if (!operators.length) {
-        container.innerHTML = '<div style="color:#94a3b8;font-size:13px;">Aucun opÃ©rateur disponible.</div>';
+        container.innerHTML = '<div style="color:#94a3b8;font-size:13px;">Aucun opérateur disponible.</div>';
         return;
       }
       container.innerHTML = operators.map(function(op) {
@@ -6145,7 +6136,7 @@ button:disabled {
       byId('transportOperator').value = name;
       var fb = byId('transportOperatorFeedback');
       if (fb) {
-        fb.innerHTML = 'ðŸ‘¤ DÃ©clarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearTransportOperator()">âœ•</button>';
+        fb.innerHTML = 'ðŸ‘¤ Déclarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearTransportOperator()">/button>';
         fb.style.display = 'flex';
       }
       renderTransportOperatorPicker();
@@ -6183,7 +6174,7 @@ button:disabled {
 		const { error } = await _supabase.from('iks_transport_requests').insert([newRow]);
 		if (error) throw error;
 
-		addLog('Demande envoyÃ©e.');
+		addLog('Demande envoyée.');
 		resetTransportForm();
 		
 		await sbLoadTransportRequests(); 
@@ -6275,7 +6266,7 @@ button:disabled {
       if (!req || req.status !== 'pending') return;
       req.status = 'rejected';
       await sbUpdateTransportRequest(id, 'rejected');
-      addLog('Transport rejetÃ© : ' + req.machine + ' (dÃ©clarant: ' + req.operator + ')');
+      addLog('Transport rejeté : ' + req.machine + ' (déclarant: ' + req.operator + ')');
       updateTransportBadge();
       renderTransportRequests();
     };
@@ -6309,14 +6300,14 @@ button:disabled {
         return;
       }
       container.innerHTML = transportRequests.map(function(req) {
-        var statusLabel = req.status === 'pending' ? 'â³ En attente' : req.status === 'accepted' ? 'âœ… AcceptÃ©e' : 'âŒ RejetÃ©e';
+        var statusLabel = req.status === 'pending' ? 'En attente' : req.status === 'accepted' ? 'Acceptée' : 'Rejetée';
         var dateStr = req.created_at ? new Date(req.created_at).toLocaleString('fr-FR') : '-';
         var actionsHtml = '';
         if (req.status === 'pending') {
           if (isTransportAdminUnlocked) {
             actionsHtml = '<div class="transport-card-actions">' +
-              '<button class="accept-btn" style="border:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;" onclick="acceptTransportRequest(\'' + req.id + '\')">âœ… Accepter</button>' +
-              '<button class="reject-btn" style="border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;" onclick="rejectTransportRequest(\'' + req.id + '\')">âŒ Rejeter</button>' +
+              '<button class="accept-btn" style="border:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;" onclick="acceptTransportRequest(\'' + req.id + '\')">Accepter</button>' +
+              '<button class="reject-btn" style="border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;" onclick="rejectTransportRequest(\'' + req.id + '\')">Rejeter</button>' +
               '</div>';
           } else {
             actionsHtml = '<div><button class="small-btn" onclick="openTransportAdminAccess()" style="font-size:12px;">ðŸ” Valider</button></div>';
@@ -6330,9 +6321,9 @@ button:disabled {
                 (req.status === 'pending' ? 'background:#fef3c7;color:#92400e;' : req.status === 'accepted' ? 'background:#dcfce7;color:#15803d;' : 'background:#fee2e2;color:#b91c1c;') + '">' +
                 statusLabel + '</span>' +
             '</div>' +
-            '<p style="margin:0;font-size:13px;color:#475569;">ðŸ‘¤ DÃ©clarant : <strong>' + escapeHtml(req.operator) + '</strong></p>' +
+            '<p style="margin:0;font-size:13px;color:#475569;">ðŸ‘¤ Déclarant : <strong>' + escapeHtml(req.operator) + '</strong></p>' +
             '<p style="margin:4px 0 0;font-size:12px;color:#94a3b8;">ðŸ• ' + dateStr + '</p>' +
-            (req.status === 'accepted' ? '<p style="margin:6px 0 0;font-size:13px;color:#15803d;font-weight:700;">âœ… Machine affectÃ©e Ã  ' + escapeHtml(req.operator) + '</p>' : '') +
+            (req.status === 'accepted' ? '<p style="margin:6px 0 0;font-size:13px;color:#15803d;font-weight:700;">Machine affectée Ã  ' + escapeHtml(req.operator) + '</p>' : '') +
           '</div>' +
           actionsHtml +
         '</div>';
@@ -6372,7 +6363,7 @@ button:disabled {
   <div id="notifToast" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9999;align-items:center;gap:12px;padding:14px 18px;border-radius:16px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff;box-shadow:0 16px 40px rgba(29,78,216,0.32);font-size:14px;font-weight:600;max-width:340px;">
     <span style="font-size:22px;">ðŸ””</span>
     <span id="notifToastMsg"></span>
-    <button onclick="this.parentElement.style.display='none'" style="border:none;background:rgba(255,255,255,0.2);color:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;font-size:12px;font-weight:700;margin-left:auto;">âœ•</button>
+    <button onclick="this.parentElement.style.display='none'" style="border:none;background:rgba(255,255,255,0.2);color:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;font-size:12px;font-weight:700;margin-left:auto;">/button>
   </div>
 </body>
 </html>
