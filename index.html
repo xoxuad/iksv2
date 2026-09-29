@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -6,864 +6,1603 @@
   <title>Atelier IKS</title>
   <link rel="icon" type="image/jpeg" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
-  <!-- No external Supabase SDK using hand-rolled REST+WebSocket client to avoid DataCloneError -->
+  <!-- No external Supabase SDK — using hand-rolled REST+WebSocket client to avoid DataCloneError -->
   <style>
-/* ============================================
-   IKS ATELIER - ENHANCED CSS
-   Modern UI improvements while keeping all functionality
-   ============================================ */
-
-:root {
-  /* Enhanced color palette */
-  --bg: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  --bg-overlay: rgba(255, 255, 255, 0.95);
-  --panel: rgba(255, 255, 255, 0.98);
-  --panel-alt: #f8fafc;
-  --text: #0f172a;
-  --muted: #64748b;
-  --line: rgba(215, 225, 240, 0.6);
-
-  /* Primary colors - enhanced */
-  --blue-700: #1d4ed8;
-  --blue-600: #2563eb;
-  --blue-500: #3b82f6;
-  --blue-400: #60a5fa;
-
-  /* Status colors */
-  --green-100: #dcfce7;
-  --green-700: #15803d;
-  --amber-100: #fef3c7;
-  --amber-700: #b45309;
-  --red-100: #fee2e2;
-  --red-700: #b91c1c;
-
-  /* Shadows - enhanced */
-  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
-  --shadow: 0 8px 32px rgba(15, 23, 42, 0.12);
-  --shadow-lg: 0 16px 48px rgba(15, 23, 42, 0.16);
-  --shadow-xl: 0 24px 64px rgba(15, 23, 42, 0.24);
-
-  /* Transitions */
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* ============================================
-   ANIMATED BACKGROUND
-   ============================================ */
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
-  color: var(--text);
-  position: relative;
-  min-height: 100vh;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.4) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(167, 139, 250, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
-  animation: float 20s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  33% { transform: translateY(-20px) scale(1.05); }
-  66% { transform: translateY(10px) scale(0.95); }
-}
-
-/* ============================================
-   HEADER - Enhanced with glassmorphism
-   ============================================ */
-
-header {
-  position: relative;
-  z-index: 100;
-  padding: 24px 32px 28px;
-  color: #fff;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  margin-bottom: 12px;
-  backdrop-filter: blur(10px);
-  animation: slideInDown 0.6s ease;
-}
-
-header h1 {
-  margin: 0 0 6px;
-  font-size: 32px;
-  line-height: 1.1;
-  font-weight: 800;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  animation: slideInDown 0.6s ease 0.1s both;
-}
-
-header p {
-  margin: 0;
-  max-width: 820px;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 15px;
-  animation: slideInDown 0.6s ease 0.2s both;
-}
-
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.header-clock {
-  min-width: 200px;
-  padding: 16px 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  text-align: right;
-  backdrop-filter: blur(10px);
-  transition: var(--transition);
-  animation: slideInDown 0.6s ease 0.3s both;
-}
-
-.header-clock:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.header-clock .label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.85;
-  font-weight: 600;
-}
-
-.header-clock .value {
-  margin-top: 8px;
-  font-size: 24px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ============================================
-   LAYOUT - Enhanced with better spacing
-   ============================================ */
-
-.layout {
-  position: relative;
-  z-index: 1;
-  max-width: 1500px;
-  margin: 32px auto 40px;
-  padding: 0 24px;
-  display: grid;
-  grid-template-columns: 380px minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-  animation: fadeInUp 0.8s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ============================================
-   PANELS - Glassmorphism effect
-   ============================================ */
-
-.panel {
-  background: var(--panel);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 24px;
-  box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(20px);
-  overflow: hidden;
-  transition: var(--transition);
-}
-
-.panel:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: rgba(255, 255, 255, 0.8);
-}
-
-.panel-inner {
-  padding: 28px;
-}
-
-.section-title {
-  margin: 0 0 8px;
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--text);
-}
-
-.section-copy {
-  margin: 0 0 24px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* ============================================
-   FORM ELEMENTS - Enhanced
-   ============================================ */
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.field-wide {
-  grid-column: 1 / -1;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: 0.01em;
-}
-
-input, select, textarea {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 15px;
-  color: var(--text);
-  background: white;
-  border: 2px solid rgba(203, 213, 225, 0.5);
-  border-radius: 12px;
-  outline: none;
-  transition: var(--transition);
-  font-family: inherit;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: var(--blue-500);
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-  background: white;
-}
-
-input:hover, select:hover, textarea:hover {
-  border-color: var(--blue-400);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.helper {
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-/* ============================================
-   BUTTONS - Enhanced with gradients
-   ============================================ */
-
-button {
-  border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  font-family: inherit;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.primary {
-  color: #fff;
-  background: linear-gradient(135deg, var(--blue-700), var(--blue-500));
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-}
-
-.secondary {
-  color: var(--text);
-  background: rgba(226, 232, 240, 0.8);
-  backdrop-filter: blur(10px);
-}
-
-.secondary:hover:not(:disabled) {
-  background: rgba(226, 232, 240, 1);
-}
-
-.small-btn {
-  padding: 8px 14px;
-  font-size: 13px;
-  color: var(--blue-700);
-  background: rgba(239, 246, 255, 0.8);
-  border: 1px solid rgba(191, 219, 254, 0.8);
-}
-
-.small-btn:hover:not(:disabled) {
-  background: rgba(239, 246, 255, 1);
-  border-color: var(--blue-500);
-}
-
-.small-btn.success {
-  color: var(--green-700);
-  background: rgba(240, 253, 244, 0.8);
-  border-color: rgba(187, 247, 208, 0.8);
-}
-
-.small-btn.edit {
-  color: var(--amber-700);
-  background: rgba(255, 251, 235, 0.8);
-  border-color: rgba(253, 230, 138, 0.8);
-}
-
-.danger-soft {
-  color: var(--red-700);
-  background: rgba(254, 226, 226, 0.8);
-  border: 1px solid rgba(254, 202, 202, 0.8);
-}
-
-/* ============================================
-   STATS - Enhanced cards
-   ============================================ */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.stat {
-  padding: 20px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: var(--shadow);
-  transition: var(--transition);
-  backdrop-filter: blur(10px);
-}
-
-.stat:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(255, 255, 255, 0.9);
-}
-
-.stat-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-
-.stat-value {
-  margin-top: 12px;
-  font-size: 36px;
-  font-weight: 800;
-  color: var(--text);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ============================================
-   TABS - Enhanced
-   ============================================ */
-
-.tabs {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.tab-btn {
-  color: var(--blue-700);
-  background: rgba(219, 234, 254, 0.6);
-  border: 1px solid rgba(191, 219, 254, 0.8);
-  backdrop-filter: blur(10px);
-  transition: var(--transition);
-}
-
-.tab-btn:hover {
-  background: rgba(219, 234, 254, 0.9);
-  border-color: var(--blue-500);
-}
-
-.tab-btn.active {
-  color: #fff;
-  background: linear-gradient(135deg, var(--blue-700), var(--blue-500));
-  border-color: transparent;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.tab-panel {
-  display: none;
-}
-
-.tab-panel.active {
-  display: block;
-  animation: fadeIn 0.4s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ============================================
-   TOUCH PICKERS - Enhanced
-   ============================================ */
-
-.touch-grid-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.alphabet-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.machine-result-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  min-height: 20px;
-}
-
-.touch-letter-btn, .machine-btn {
-  padding: 16px 20px;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 14px;
-  border: 2px solid rgba(59, 130, 246, 0.3);
-  background: white;
-  color: var(--blue-700);
-  cursor: pointer;
-  text-align: center;
-  transition: var(--transition);
-  backdrop-filter: blur(10px);
-}
-
-.touch-letter-btn:hover, .machine-btn:hover {
-  background: rgba(239, 246, 255, 0.8);
-  border-color: var(--blue-500);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-.touch-letter-btn.active, .machine-btn.active {
-  background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
-  color: white;
-  border-color: var(--blue-700);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.issue-touch-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.issue-piece-tile {
-  padding: 20px 16px;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 14px;
-  border: 2px solid rgba(59, 130, 246, 0.3);
-  background: white;
-  color: var(--blue-700);
-  cursor: pointer;
-  text-align: center;
-  line-height: 1.3;
-  transition: var(--transition);
-}
-
-.issue-piece-tile:hover {
-  border-color: var(--blue-500);
-  transform: scale(1.03);
-  box-shadow: var(--shadow);
-}
-
-.issue-piece-tile.active {
-  background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
-  color: white;
-  border-color: var(--blue-700);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.issue-problem-tile {
-  padding: 18px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 12px;
-  border: 2px solid rgba(16, 185, 129, 0.3);
-  background: white;
-  color: #047857;
-  cursor: pointer;
-  text-align: center;
-  line-height: 1.3;
-  transition: var(--transition);
-}
-
-.issue-problem-tile:hover {
-  border-color: #10b981;
-  transform: scale(1.03);
-  box-shadow: var(--shadow);
-}
-
-.issue-problem-tile.active {
-  background: linear-gradient(135deg, #059669, #10b981);
-  color: white;
-  border-color: #047857;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
-/* ============================================
-   BADGES - Enhanced
-   ============================================ */
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.status-ouvert {
-  color: var(--red-700);
-  background: var(--red-100);
-  border: 1px solid rgba(185, 28, 28, 0.2);
-}
-
-.status-encours {
-  color: var(--amber-700);
-  background: var(--amber-100);
-  border: 1px solid rgba(180, 83, 9, 0.2);
-}
-
-.status-cloture {
-  color: var(--green-700);
-  background: var(--green-100);
-  border: 1px solid rgba(21, 128, 61, 0.2);
-}
-
-/* ============================================
-   WORKSPACE - Enhanced
-   ============================================ */
-
-.workspace-shell {
-  overflow: hidden;
-  border-radius: 24px;
-}
-
-.workspace-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 20px 24px;
-  color: #fff;
-  background: linear-gradient(90deg, var(--blue-700) 0%, var(--blue-500) 100%);
-  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2);
-}
-
-.workspace-bar h2 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.ghost-btn {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-}
-
-.ghost-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.workspace-body {
-  padding: 24px;
-  background: linear-gradient(180deg, rgba(248, 250, 252, 0.5), rgba(255, 255, 255, 0.8));
-  backdrop-filter: blur(10px);
-}
-
-/* ============================================
-   MODAL - Enhanced
-   ============================================ */
-
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(8px);
-  animation: fadeIn 0.3s ease;
-}
-
-.modal {
-  width: 100%;
-  max-width: 500px;
-  padding: 32px;
-  border-radius: 24px;
-  background: white;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: var(--shadow-xl);
-  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.modal h3 {
-  margin: 0 0 12px;
-  font-size: 24px;
-  font-weight: 800;
-}
-
-.modal p {
-  margin: 0 0 20px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-/* ============================================
-   TOAST - Enhanced
-   ============================================ */
-
-#notifToast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 99999;
-  display: none;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 24px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--blue-700), var(--blue-500));
-  color: #fff;
-  box-shadow: var(--shadow-xl);
-  font-size: 15px;
-  font-weight: 600;
-  max-width: 400px;
-  backdrop-filter: blur(20px);
-  animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* ============================================
-   SCROLLBAR - Enhanced
-   ============================================ */
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(241, 245, 249, 0.5);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--blue-500), var(--blue-600));
-  border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--blue-600), var(--blue-700));
-}
-
-/* ============================================
-   RESPONSIVE - Enhanced
-   ============================================ */
-
-@media (max-width: 1260px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 980px) {
-  .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .admin-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  header {
-    padding: 20px 20px 24px;
-  }
-
-  .layout {
-    margin-top: 20px;
-    padding: 0 16px 24px;
-    gap: 16px;
-  }
-
-  .panel-inner {
-    padding: 20px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stats {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .issue-touch-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-}
-
-/* ============================================
-   HIDDEN UTILITY
-   ============================================ */
-
-.hidden {
-  display: none !important;
-}
-
+    :root {
+      --bg: #eef3fb;
+      --panel: #ffffff;
+      --panel-alt: #f7f9fd;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #d7e1f0;
+      --blue-700: #1d4ed8;
+      --blue-600: #2563eb;
+      --blue-500: #3b82f6;
+      --green-100: #dcfce7;
+      --green-700: #15803d;
+      --amber-100: #fef3c7;
+      --amber-700: #b45309;
+      --red-100: #fee2e2;
+      --red-700: #b91c1c;
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    #diagNextBtn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* Two-level issue picker */
+    .piece-option:hover { background: #eff6ff !important; }
+    #pieceSearch:focus { border-color: var(--blue-500); box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
+    #pieceDropdown::-webkit-scrollbar { width: 6px; }
+    #pieceDropdown::-webkit-scrollbar-track { background: transparent; }
+    #pieceDropdown::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    #pieceDropdown mark { border-radius: 2px; }
+    #problemeBlock select:focus { border-color: var(--blue-500); box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
+    /* Catalogue modal scrollbars */
+    #cataloguePieceList::-webkit-scrollbar,
+    #catalogueProblemList::-webkit-scrollbar { width: 5px; }
+    #cataloguePieceList::-webkit-scrollbar-thumb,
+    #catalogueProblemList::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    header {
+      padding: 26px 28px 30px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.34), rgba(15, 23, 42, 0.18)),
+        linear-gradient(135deg, #0f3d96 0%, #2563eb 52%, #60a5fa 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 14px 34px rgba(29, 78, 216, 0.24);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 31px;
+      line-height: 1.1;
+    }
+
+    header p {
+      margin: 0;
+      max-width: 820px;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .header-clock {
+      min-width: 200px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      text-align: right;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-clock .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.84;
+    }
+
+    .header-clock .value {
+      margin-top: 8px;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .layout {
+      max-width: 1500px;
+      margin: 24px auto 34px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: 380px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(215, 225, 240, 0.95);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel-inner {
+      padding: 20px;
+    }
+
+    .section-title {
+      margin: 0 0 4px;
+      font-size: 21px;
+    }
+
+    .section-copy {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field-wide {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      font-size: 14px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      border-radius: 6px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    .helper {
+      margin-top: 7px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.98);
+    }
+
+    .primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-500));
+    }
+
+    .secondary {
+      color: #0f172a;
+      background: #e2e8f0;
+    }
+
+    .small-btn {
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--blue-700);
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .small-btn.success {
+      color: var(--green-700);
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      margin-top: 8px;
+      font-size: 30px;
+      font-weight: 800;
+      color: #0b1324;
+    }
+
+    .workspace-shell {
+      overflow: hidden;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      color: #1e3a8a;
+      background: #dbeafe;
+      border: 1px solid #bfdbfe;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-500));
+      border-color: transparent;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .workspace-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 16px 20px;
+      color: #fff;
+      background: linear-gradient(90deg, #1d4ed8 0%, #3b82f6 100%);
+    }
+
+    .workspace-bar h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .workspace-bar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ghost-btn {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .ghost-btn.hidden {
+      display: none;
+    }
+
+    .workspace-body {
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.92), rgba(255, 255, 255, 0.98)),
+        var(--panel);
+    }
+
+    .board-toolbar {
+      margin-bottom: 18px;
+    }
+
+    .board-toolbar p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .focus-card {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #eff6ff 0%, #ffffff 85%);
+      border: 1px solid #cfe0ff;
+    }
+
+    .admin-panel {
+      display: none;
+      margin-bottom: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffffff 85%);
+      border: 1px solid #fed7aa;
+    }
+
+    .admin-panel.active {
+      display: block;
+    }
+
+    .admin-panel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .admin-panel-top p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 16px;
+    }
+
+    .admin-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .admin-tech-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #fde68a;
+    }
+
+    .admin-tech-item h4 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .admin-tech-item p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .admin-form {
+      padding: 14px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid #fde68a;
+    }
+
+    .admin-form .form-grid {
+      margin-top: 12px;
+    }
+
+    .danger-soft {
+      color: #b91c1c;
+      background: #fee2e2;
+      border: 1px solid #fecaca;
+    }
+
+    #operatorManagerModal .modal {
+      max-width: 760px;
+    }
+
+    #operatorManagerModal .admin-layout {
+      grid-template-columns: minmax(0, 1fr) 230px;
+      align-items: start;
+      gap: 12px;
+    }
+
+    #operatorManagerModal .admin-panel-top {
+      margin-bottom: 10px;
+    }
+
+    #operatorManagerModal .admin-panel-top .section-title {
+      font-size: 18px;
+    }
+
+    #operatorManagerModal .admin-panel-top p {
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    #operatorManagerModal .admin-list {
+      gap: 8px;
+      align-content: start;
+    }
+
+    #operatorManagerModal .admin-tech-item,
+    #operatorManagerModal .admin-form {
+      border: 1px solid #dbe4f0;
+      background: #ffffff;
+    }
+
+    #operatorManagerModal .admin-tech-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      width: 100%;
+      min-width: 0;
+      padding: 8px 10px;
+      border-radius: 12px;
+    }
+
+    #operatorManagerModal .admin-tech-item h4 {
+      font-size: 14px;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    #operatorManagerModal .admin-tech-item p { display: none; }
+
+    #operatorManagerModal .admin-actions {
+      flex-direction: row;
+      align-items: center;
+      min-width: 0;
+      flex-shrink: 0;
+    }
+
+    #operatorManagerModal .admin-actions .small-btn {
+      width: auto;
+      min-width: 88px;
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    #operatorManagerModal .admin-form {
+      width: 100%;
+      min-width: 0;
+      padding: 10px;
+      border-radius: 14px;
+    }
+
+    #operatorManagerModal .admin-form h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    #operatorManagerModal .admin-form label {
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    #operatorManagerModal .admin-form input {
+      padding: 9px 10px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    #operatorManagerModal .admin-form .actions {
+      margin-top: 10px;
+      gap: 8px;
+    }
+
+    #operatorManagerModal .admin-form .actions button {
+      flex: 1 1 0;
+      padding: 9px 10px;
+      font-size: 13px;
+    }
+
+    #machineManagerModal .modal {
+      max-width: 980px;
+      max-height: min(82vh, 760px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #machineManagerModal .admin-layout {
+      flex: 1 1 auto;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+      align-items: start;
+      gap: 14px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    #machineManagerModal .admin-tech-item,
+    #machineManagerModal .admin-form {
+      border: 1px solid #dbe4f0;
+      background: #ffffff;
+    }
+
+    #machineManagerModal .admin-layout > div {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    #machineManagerModal .admin-list {
+      max-height: 100%;
+      overflow: auto;
+      padding-right: 4px;
+      align-content: start;
+    }
+
+    #machineManagerModal .admin-form {
+      max-height: 100%;
+      overflow: auto;
+    }
+
+	#machineList {
+	  height: 450px !important; 
+	  max-height: 50vh !important; 
+	  overflow-y: auto !important; 
+	  display: block !important; 
+	  padding: 10px !important;
+	  border: 1px solid #dbe4f0 !important;
+	  background: #ffffff !important;
+	  border-radius: 12px !important;
+	}
+	
+	.admin-tech-item {
+	  flex-shrink: 0 !important;
+	  margin-bottom: 8px !important;
+	}
+	
+	.machine-admin-row {
+	  transition: all 0.2s ease;
+	  border: 1px solid #e2e8f0;
+	  border-radius: 12px;
+	  padding: 10px;
+	  margin-bottom: 8px;
+	  background: white;
+	  display: grid;
+	  grid-template-columns: auto 1fr 1.5fr auto; /* Checkbox, Name, Select, Delete */
+	  gap: 12px;
+	  align-items: center;
+	}
+
+	/* The "Selected" state */
+	.machine-admin-row.is-selected {
+	  background-color: #eff6ff !important;
+	  border-color: #3b82f6 !important;
+	  box-shadow: 0 0 0 1px #3b82f6;
+	}
+
+	/* Custom checkbox look */
+	.admin-checkbox {
+	  width: 18px;
+	  height: 18px;
+	  cursor: pointer;
+	}
+
+	#machineList::-webkit-scrollbar {
+	  width: 6px;
+	}
+	#machineList::-webkit-scrollbar-thumb {
+	  background: #cbd5e1;
+	  border-radius: 3px;
+	}
+    .machine-bulk-actions {
+      margin-bottom: 12px;
+    }
+
+    .machine-row {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .machine-row label {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    .machine-row .machine-name {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .import-stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .import-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .import-summary {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .focus-profile {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding-right: 8px;
+      border-right: 1px solid #dbeafe;
+    }
+
+    .avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(29, 78, 216, 0.18);
+      flex-shrink: 0;
+    }
+
+    .profile-name {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .profile-meta {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .focus-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-stat {
+      padding: 14px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #dbeafe;
+    }
+
+    .mini-stat .label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .mini-stat .value {
+      margin-top: 8px;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .technician-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 14px;
+    }
+
+    .tech-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .tech-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tech-header .avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 16px;
+      font-size: 22px;
+    }
+
+    .tech-title {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .tech-subtitle {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tech-id {
+      margin-left: auto;
+      align-self: flex-start;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue-700);
+      background: #eff6ff;
+    }
+
+    .tech-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .tech-metric {
+      padding: 10px;
+      border-radius: 14px;
+      text-align: center;
+      background: var(--panel-alt);
+      border: 1px solid #e2e8f0;
+    }
+
+    .tech-metric .label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .tech-metric .value {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .assignments-title {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #334155;
+    }
+
+    .assignment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 96px;
+    }
+
+    .assignment-item {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .assignment-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .assignment-meta {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      min-height: 96px;
+      padding: 14px;
+      border-radius: 14px;
+      color: var(--muted);
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .ticket-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .ticket {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 260px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .ticket-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ticket-title {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .ticket p {
+      margin: 7px 0 0;
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-ouvert { color: var(--red-700); background: var(--red-100); }
+    .status-encours { color: var(--amber-700); background: var(--amber-100); }
+    .status-cloture { color: var(--green-700); background: var(--green-100); }
+
+    .ticket-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .ticket-content {
+      display: grid;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .ticket-footer {
+      margin-top: 12px;
+    }
+
+    .export-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .panel-action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .export-btn {
+      text-align: left;
+      color: #0f172a;
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      border: 1px solid #cbd5e1;
+    }
+
+    .export-btn strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 14px;
+    }
+
+    .export-btn span {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .log {
+      max-height: 260px;
+      overflow: auto;
+      padding: 14px;
+      border-radius: 18px;
+      background: #0f172a;
+      color: #dbeafe;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .indicator-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .indicator-panel {
+      padding: 18px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .indicator-panel.wide {
+      grid-column: 1 / -1;
+    }
+
+    .indicator-panel h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .indicator-copy {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .indicator-kpis {
+      margin-bottom: 18px;
+    }
+
+    .indicator-kpi-value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #0b1324;
+    }
+
+    .calendar-chart {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .calendar-day {
+      min-height: 112px;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid #dbeafe;
+    }
+
+    .calendar-day.empty {
+      min-height: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+    }
+
+    .calendar-day-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .calendar-day-number {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .calendar-day-count {
+      padding: 4px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #1d4ed8;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(191, 219, 254, 0.9);
+    }
+
+    .calendar-day p {
+      margin: 5px 0 0;
+      font-size: 12px;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    .month-chart {
+      display: grid;
+      gap: 12px;
+    }
+
+    .month-row {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) 62px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .month-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #334155;
+      text-transform: uppercase;
+    }
+
+    .month-bar-wrap {
+      display: grid;
+      gap: 6px;
+    }
+
+    .month-track {
+      position: relative;
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e2e8f0;
+    }
+
+    .month-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .month-bar.created {
+      background: linear-gradient(90deg, #1d4ed8, #60a5fa);
+    }
+
+    .month-bar.closed {
+      background: linear-gradient(90deg, #15803d, #4ade80);
+    }
+
+    .month-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .month-total {
+      text-align: right;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .insight-list,
+    .ranking-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .insight-item,
+    .ranking-item {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .insight-item strong,
+    .ranking-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: #0f172a;
+    }
+
+    .insight-item p,
+    .ranking-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .hidden { display: none; }
+
+    /* ── KPI tooltip ── */
+    .kpi-tooltip-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .kpi-tooltip-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: default;
+      flex-shrink: 0;
+    }
+    .kpi-tooltip-icon:hover + .kpi-tooltip-bubble,
+    .kpi-tooltip-bubble:hover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .kpi-tooltip-bubble {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      z-index: 200;
+      min-width: 200px;
+      max-width: 240px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.45;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      white-space: normal;
+    }
+
+    /* ── Health status chips ── */
+    .health-good    { color: var(--green-700); background: var(--green-100); border: 1px solid #86efac; }
+    .health-warn    { color: var(--amber-700); background: var(--amber-100); border: 1px solid #fcd34d; }
+    .health-urgent  { color: var(--red-700);   background: var(--red-100);   border: 1px solid #fca5a5; }
+    .health-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .maint-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #1d4ed8;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+    .maint-chip.corrective { color: var(--red-700); background: var(--red-100); border-color: #fca5a5; }
+    .maint-chip.predictive { color: var(--amber-700); background: var(--amber-100); border-color: #fcd34d; }
+    .maint-chip.inefficace { color: #7c3aed; background: #f5f3ff; border-color: #c4b5fd; }
+
+    .small-btn.edit {
+      color: #b45309;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+    }
+
+    .edit-modal-section {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 10px;
+    }
+
+    .edit-modal-section h4 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #0f172a;
+    }
+
+    .edit-warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      font-size: 12px;
+      color: #92400e;
+      margin-bottom: 14px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 440px;
+      padding: 20px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid #dbeafe;
+      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.22);
+    }
+
+    .modal h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .modal p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .modal-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    @media (max-width: 1260px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 980px) {
+      .stats,
+      .focus-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .focus-card { grid-template-columns: 1fr; }
+
+      .admin-layout { grid-template-columns: 1fr; }
+
+      #operatorManagerModal .admin-layout { grid-template-columns: 1fr; }
+
+      #machineManagerModal .admin-layout { grid-template-columns: 1fr; }
+
+      .indicator-layout { grid-template-columns: 1fr; }
+
+      .focus-profile {
+        border-right: none;
+        padding-right: 0;
+        border-bottom: 1px solid #dbeafe;
+        padding-bottom: 16px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      header { padding: 22px 18px 26px; }
+
+      .layout {
+        margin-top: 16px;
+        padding: 0 12px 18px;
+      }
+
+      .panel-inner,
+      .workspace-body { padding: 14px; }
+
+      .form-grid,
+      .stats,
+      .focus-metrics,
+      .calendar-chart { grid-template-columns: 1fr; }
+
+      .export-grid { grid-template-columns: 1fr; }
+
+      .month-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Touch machine & issue picker ── */
+    .touch-grid-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .alphabet-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .machine-result-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 20px;
+    }
+
+    .touch-letter-btn {
+      padding: 14px 18px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 12px;
+      border: 2px solid var(--blue-500);
+      background: white;
+      color: var(--blue-700);
+      cursor: pointer;
+      min-width: 52px;
+      text-align: center;
+      transition: background 0.12s, color 0.12s;
+    }
+
+    .touch-letter-btn.active,
+    .touch-letter-btn:hover {
+      background: var(--blue-600);
+      color: white;
+      border-color: var(--blue-700);
+    }
+
+    .machine-btn {
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+      border: 2px solid var(--blue-500);
+      background: white;
+      color: var(--blue-700);
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.12s, color 0.12s;
+    }
+
+    .machine-btn.active,
+    .machine-btn:hover {
+      background: var(--blue-600);
+      color: white;
+      border-color: var(--blue-700);
+    }
+
+    /* Issue tiles grid */
+    .issue-touch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .issue-piece-tile {
+      padding: 18px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 14px;
+      border: 2px solid var(--blue-500);
+      background: white;
+      color: var(--blue-700);
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.3;
+      transition: background 0.12s, color 0.12s;
+    }
+
+    .issue-piece-tile:hover,
+    .issue-piece-tile.active {
+      background: var(--blue-600);
+      color: white;
+      border-color: var(--blue-700);
+    }
+
+    .issue-problem-tile {
+      padding: 16px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: 2px solid #10b981;
+      background: white;
+      color: #047857;
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.3;
+      transition: background 0.12s, color 0.12s;
+    }
+
+    .issue-problem-tile:hover,
+    .issue-problem-tile.active {
+      background: #10b981;
+      color: white;
+      border-color: #047857;
+    }
+
+    .touch-back-btn {
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 10px;
+      border: 2px solid #94a3b8;
+      background: #f1f5f9;
+      color: #475569;
+      cursor: pointer;
+      margin-bottom: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .touch-selected-badge {
+      padding: 10px 14px;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blue-700);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .touch-clear-btn {
+      border: none;
+      background: none;
+      color: #64748b;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    /* ── Transport request cards ── */
+    .transport-request-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 14px rgba(15,23,42,0.05);
+      margin-bottom: 12px;
+    }
+    .transport-request-card.pending { border-left: 4px solid #f59e0b; }
+    .transport-request-card.accepted { border-left: 4px solid #22c55e; }
+    .transport-request-card.rejected { border-left: 4px solid #ef4444; opacity:.65; }
+    .transport-card-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .accept-btn { color:#fff; background:linear-gradient(135deg,#15803d,#22c55e); }
+    .reject-btn { color:#b91c1c; background:#fee2e2; border:1px solid #fecaca; }
+
+    /* ── In-app notification toast ── */
+    #notifToast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg,#1d4ed8,#3b82f6);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(29,78,216,0.32);
+      font-size: 14px;
+      font-weight: 600;
+      max-width: 340px;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(24px); opacity:0; }
+      to   { transform: translateY(0);    opacity:1; }
+    }
   </style>
 </head>
 <body>
@@ -924,12 +1663,12 @@ button:disabled {
             <!-- Hidden fields kept for JS compat -->
             <div id="issuePicker" style="display:none;flex-direction:column;gap:8px;">
               <div id="pieceSearchContainer" style="position:relative;">
-                <input id="pieceSearch" autocomplete="off" placeholder="ðŸ” Chercher une pièce..." style="width:100%;padding:11px 12px;font-size:14px;border:1px solid #cbd5e1;border-radius:12px;outline:none;" oninput="filterPieceList()" onfocus="showPieceDropdown()" />
+                <input id="pieceSearch" autocomplete="off" placeholder="Chercher une pièce..." style="width:100%;padding:11px 12px;font-size:14px;border:1px solid #cbd5e1;border-radius:12px;outline:none;" oninput="filterPieceList()" onfocus="showPieceDropdown()" />
                 <div id="pieceDropdown" style="display:none;position:absolute;z-index:200;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 8px 24px rgba(15,23,42,0.12);max-height:220px;overflow-y:auto;"></div>
               </div>
               <div id="pieceSelectedBadge" style="display:none;padding:6px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:13px;font-weight:700;color:#1d4ed8;align-items:center;justify-content:space-between;">
                 <span id="pieceSelectedLabel"></span>
-                <button type="button" onclick="clearPieceSelection()" style="border:none;background:none;color:#64748b;font-size:16px;cursor:pointer;padding:0 4px;line-height:1;">/button>
+                <button type="button" onclick="clearPieceSelection()" style="border:none;background:none;color:#64748b;font-size:16px;cursor:pointer;padding:0 4px;line-height:1;">X</button>
               </div>
               <div id="problemeBlock" style="display:none;">
                 <select id="issue" onchange="toggleIssueAutre()" style="width:100%;padding:11px 12px;font-size:14px;border:1px solid #cbd5e1;border-radius:12px;outline:none;">
@@ -938,7 +1677,7 @@ button:disabled {
               </div>
               <input id="issue_autre" class="hidden" style="margin-top:0;" placeholder="Décrire le problème en détail" />
               <div id="saveNewProblemBlock" style="display:none;padding:10px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;font-size:13px;">
-                <strong>ðŸ’¾ Enregistrer ce problème sous <span id="saveNewProblemPiece"></span> ?</strong>
+                <strong>Enregistrer ce problème sous <span id="saveNewProblemPiece"></span> ?</strong>
                 <div style="display:flex;gap:8px;margin-top:8px;">
                   <button type="button" class="small-btn success" onclick="saveNewProblemToCatalogue()">Oui, ajouter</button>
                   <button type="button" class="small-btn" onclick="dismissSaveNewProblem()">Non merci</button>
@@ -1106,9 +1845,9 @@ button:disabled {
             <h2 class="section-title">Suivi detaille des demandes</h2>
             <p class="section-copy">La liste complete reste disponible pour les responsables atelier et maintenance.</p>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; align-items:center;">
-              <button class="small-btn" onclick="exportTicketsXLS()" style="display:flex;align-items:center;gap:6px;">¸ Exporter les interventions (.xls)</button>
+              <button class="small-btn" onclick="exportTicketsXLS()" style="display:flex;align-items:center;gap:6px;">Exporter les interventions (.xls)</button>
               <label style="margin:0; cursor:pointer;">
-                <span class="small-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;font-size:12px;color:#1d4ed8;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;font-weight:700;cursor:pointer;">¸ Importer des interventions (.xls)</span>
+                <span class="small-btn" style="display:inline-flex;align-items:center;gap:6px;padding:8px 10px;font-size:12px;color:#1d4ed8;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;font-weight:700;cursor:pointer;">Importer des interventions (.xls)</span>
                 <input id="importTicketsFile" type="file" accept=".xls,.xlsx" style="display:none;" onchange="importTicketsXLS(event)" />
               </label>
               <span id="importTicketsFeedback" style="font-size:12px;color:#15803d;display:none;"></span>
@@ -1147,13 +1886,13 @@ button:disabled {
           </div>
         </div>
 
-        <!-- ”€ KPI row 1 : existing indicators ”€ -->
+        <!-- ── KPI row 1 : existing indicators ── -->
         <div class="stats indicator-kpis" style="grid-template-columns: repeat(4, minmax(0,1fr));">
           <div class="stat">
             <div class="stat-label kpi-tooltip-wrap">
               TTR moyen
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Time To Repair durée moyenne entre le début de l'intervention (startedAt) et sa clôture (closedAt).</div>
+              <div class="kpi-tooltip-bubble">Time To Repair — durée moyenne entre le début de l'intervention (startedAt) et sa clôture (closedAt).</div>
             </div>
             <div id="indicatorAvgTTR" class="indicator-kpi-value">0 min 0 s</div>
           </div>
@@ -1161,7 +1900,7 @@ button:disabled {
             <div class="stat-label kpi-tooltip-wrap">
               TTF moyen
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Time To Failure durée moyenne entre deux pannes consécutives sur la même machine.</div>
+              <div class="kpi-tooltip-bubble">Time To Failure — durée moyenne entre deux pannes consécutives sur la même machine.</div>
             </div>
             <div id="indicatorAvgTTF" class="indicator-kpi-value">0 min 0 s</div>
           </div>
@@ -1179,39 +1918,39 @@ button:disabled {
           </div>
         </div>
 
-        <!-- ”€ KPI row 2 : new advanced indicators ”€ -->
+        <!-- ── KPI row 2 : new advanced indicators ── -->
         <div class="stats indicator-kpis" style="grid-template-columns: repeat(4, minmax(0,1fr)); margin-bottom: 18px;">
           <div class="stat" style="border-top: 3px solid #1d4ed8;">
             <div class="stat-label kpi-tooltip-wrap">
               MTBF
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Mean Time Between Failures temps moyen de fonctionnement entre deux pannes. Calculé sur l'ensemble du parc : Temps total opération / Nombre de pannes.</div>
+              <div class="kpi-tooltip-bubble">Mean Time Between Failures — temps moyen de fonctionnement entre deux pannes. Calculé sur l'ensemble du parc : Temps total opération / Nombre de pannes.</div>
             </div>
-            <div id="indicatorMTBF" class="indicator-kpi-value" style="font-size:22px;">/div>
+            <div id="indicatorMTBF" class="indicator-kpi-value" style="font-size:22px;">—</div>
           </div>
           <div class="stat" style="border-top: 3px solid #0f766e;">
             <div class="stat-label kpi-tooltip-wrap">
               MTTR
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Mean Time To Repair temps moyen de réparation. Calculé sur toutes les interventions clôturées : Total temps réparation / Nombre de réparations.</div>
+              <div class="kpi-tooltip-bubble">Mean Time To Repair — temps moyen de réparation. Calculé sur toutes les interventions clôturées : Total temps réparation / Nombre de réparations.</div>
             </div>
-            <div id="indicatorMTTR" class="indicator-kpi-value" style="font-size:22px;">/div>
+            <div id="indicatorMTTR" class="indicator-kpi-value" style="font-size:22px;">—</div>
           </div>
           <div class="stat" style="border-top: 3px solid #15803d;">
             <div class="stat-label kpi-tooltip-wrap">
               TD (Disponibilité)
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Taux de Disponibilité pourcentage de temps où les machines sont opérationnelles. Formule : MTBF / (MTBF + MTTR) Ã— 100.</div>
+              <div class="kpi-tooltip-bubble">Taux de Disponibilité — pourcentage de temps où les machines sont opérationnelles. Formule : MTBF / (MTBF + MTTR) × 100.</div>
             </div>
-            <div id="indicatorTD" class="indicator-kpi-value" style="font-size:22px;">/div>
+            <div id="indicatorTD" class="indicator-kpi-value" style="font-size:22px;">—</div>
           </div>
           <div class="stat" style="border-top: 3px solid #b45309;">
             <div class="stat-label kpi-tooltip-wrap">
               IPR
               <span class="kpi-tooltip-icon">?</span>
-              <div class="kpi-tooltip-bubble">Indice de Performance de Réparation rapport MTBF/MTTR. Plus la valeur est élevée, plus les pannes sont rares par rapport au temps de réparation.</div>
+              <div class="kpi-tooltip-bubble">Indice de Performance de Réparation — rapport MTBF/MTTR. Plus la valeur est élevée, plus les pannes sont rares par rapport au temps de réparation.</div>
             </div>
-            <div id="indicatorIPR" class="indicator-kpi-value" style="font-size:22px;">/div>
+            <div id="indicatorIPR" class="indicator-kpi-value" style="font-size:22px;">—</div>
           </div>
         </div>
 
@@ -1252,14 +1991,14 @@ button:disabled {
           </div>
         </div>
       </div>
-      <!-- • TRANSPORT TAB ••••••••••••••••••••••••• -->
+      <!-- ══ TRANSPORT TAB ══════════════════════════════════════════════════ -->
       <div id="transportTabPanel" class="tab-panel">
 
         <!-- Request form card -->
         <div class="panel" style="margin-bottom:18px;">
           <div class="panel-inner">
             <h2 class="section-title">Demande de Transport</h2>
-            <p class="section-copy">Le déclarant signale qu'une machine doit être déplacée. La demande sera soumise Ã  validation admin avant affectation.</p>
+            <p class="section-copy">Le déclarant signale qu'une machine doit être déplacée. La demande sera soumise à validation admin avant affectation.</p>
             <div class="form-grid" style="grid-template-columns:1fr 1fr;gap:14px;">
               <div class="field-wide">
                 <label>Nom de la machine</label>
@@ -1273,7 +2012,7 @@ button:disabled {
               </div>
             </div>
             <div class="actions" style="margin-top:16px;">
-              <button type="button" class="primary" onclick="submitTransportRequest()">ðŸ“¤ Soumettre la demande</button>
+              <button type="button" class="primary" onclick="submitTransportRequest()">📤 Soumettre la demande</button>
               <button type="button" class="secondary" onclick="resetTransportForm()">Réinitialiser</button>
             </div>
           </div>
@@ -1286,7 +2025,7 @@ button:disabled {
               <h2>Demandes en attente de validation</h2>
             </div>
             <div class="workspace-bar-actions">
-              <button class="ghost-btn" onclick="openTransportAdminAccess()">ðŸ” Administration Transport</button>
+              <button class="ghost-btn" onclick="openTransportAdminAccess()">🔐 Administration Transport</button>
               <button id="transportAdminLogoutBtn" class="ghost-btn hidden" onclick="logoutTransportAdmin()">Déconnexion</button>
             </div>
           </div>
@@ -1295,7 +2034,7 @@ button:disabled {
           </div>
         </div>
       </div>
-      <!-- •••••••••••••••••••••••••••••••••-->
+      <!-- ═══════════════════════════════════════════════════════════════════ -->
 
     </section>
   </main>
@@ -1303,12 +2042,12 @@ button:disabled {
   <!-- Transport admin password modal -->
   <div id="transportAdminModal" class="modal-backdrop">
     <div class="modal">
-      <h3>ðŸ” Accès Administration Transport</h3>
+      <h3>🔐 Accès Administration Transport</h3>
       <p>Saisissez le mot de passe pour valider ou rejeter les demandes de transport.</p>
       <div class="modal-grid">
         <div>
           <label for="transportAdminPassword">Mot de passe</label>
-          <input id="transportAdminPassword" type="password" placeholder="€¢€¢€¢€¢"
+          <input id="transportAdminPassword" type="password" placeholder="••••••••"
             onkeydown="if(event.key==='Enter') unlockTransportAdmin()" />
         </div>
       </div>
@@ -1480,19 +2219,19 @@ button:disabled {
 
   <div id="editInterventionModal" class="modal-backdrop">
     <div class="modal" style="max-width: 480px;">
-      <h3>¸ Modifier les horaires</h3>
+      <h3>Modifier les horaires</h3>
       <p>Corrigez les dates et heures de cette intervention. Les calculs de temps seront mis a jour automatiquement.</p>
       <div class="edit-warning">
-        ï¸ Cette modification est tracee dans le journal de bord. Ne corriger que les vraies erreurs de saisie.
+        Cette modification est tracee dans le journal de bord. Ne corriger que les vraies erreurs de saisie.
       </div>
       <div class="modal-grid">
         <div class="edit-modal-section">
-          <h4>ðŸ“… Date et heure de declaration</h4>
+          <h4>📅 Date et heure de declaration</h4>
           <input id="editCreatedAt" type="datetime-local" />
           <div class="helper">Heure a laquelle la panne a ete declaree.</div>
         </div>
         <div id="editStartedAtBlock" class="edit-modal-section">
-          <h4>ðŸ”§ Date et heure de prise en charge</h4>
+          <h4>🔧 Date et heure de prise en charge</h4>
           <input id="editStartedAt" type="datetime-local" />
           <div class="helper">Heure a laquelle le mecanicien a commence l'intervention.</div>
         </div>
@@ -1513,8 +2252,8 @@ button:disabled {
     <div class="modal" style="max-width:740px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;">
       <div class="admin-panel-top" style="flex-shrink:0;">
         <div>
-          <h3 class="section-title" style="margin-bottom:0;">ðŸ”§ Catalogue des pannes</h3>
-          <p style="margin:4px 0 0;font-size:13px;color:#64748b;">Gérez les pièces et leurs problèmes associés. Structure: Pièce Problèmes.</p>
+          <h3 class="section-title" style="margin-bottom:0;">🔧 Catalogue des pannes</h3>
+          <p style="margin:4px 0 0;font-size:13px;color:#64748b;">Gérez les pièces et leurs problèmes associés. Structure: Pièce -> Problèmes.</p>
         </div>
         <button class="secondary" onclick="closeIssueTypeManagerModal()">Fermer</button>
       </div>
@@ -1526,19 +2265,19 @@ button:disabled {
           <!-- Add piece form -->
           <div style="padding:10px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;flex-shrink:0;">
             <input id="newPieceInput" placeholder="Nouvelle pièce..." style="width:100%;padding:8px 10px;font-size:13px;border:1px solid #cbd5e1;border-radius:8px;outline:none;" onkeydown="if(event.key==='Enter') addNewPiece();" />
-            <button class="primary" onclick="addNewPiece()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;">Ajouter</button>
+            <button class="primary" onclick="addNewPiece()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;">+ Ajouter</button>
           </div>
         </div>
         <!-- Right: problems for selected piece -->
         <div style="display:flex;flex-direction:column;gap:8px;min-height:0;">
           <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;">Problèmes <span id="catalogueSelectedPieceLabel" style="color:#1d4ed8;font-weight:800;"></span></div>
           <div id="catalogueProblemList" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding-right:2px;">
-            <div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;">Sélectionnez une pièce</div>
+            <div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;"><- Sélectionnez une pièce</div>
           </div>
           <!-- Add problem form -->
           <div id="addProblemForm" style="display:none;padding:10px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0;flex-shrink:0;">
             <input id="newProblemInput" placeholder="Nouveau problème..." style="width:100%;padding:8px 10px;font-size:13px;border:1px solid #cbd5e1;border-radius:8px;outline:none;" onkeydown="if(event.key==='Enter') addNewProblem();" />
-            <button class="primary" onclick="addNewProblem()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;background:linear-gradient(135deg,#15803d,#22c55e);">Ajouter ce problème</button>
+            <button class="primary" onclick="addNewProblem()" style="width:100%;margin-top:8px;padding:8px;font-size:13px;background:linear-gradient(135deg,#15803d,#22c55e);">+ Ajouter ce problème</button>
           </div>
         </div>
       </div>
@@ -1549,7 +2288,7 @@ button:disabled {
     </div>
   </div>
 
-  <!-- • SUPABASE CONFIG BANNER ••••••••••••••••••••• -->
+  <!-- ══ SUPABASE CONFIG BANNER ══════════════════════════════════════════ -->
   <div id="supabaseBanner" style="
     position:fixed;inset:0;z-index:99999;
     background:rgba(15,23,42,0.82);backdrop-filter:blur(8px);
@@ -1560,14 +2299,15 @@ button:disabled {
       box-shadow:0 32px 64px rgba(15,23,42,0.28);margin:16px;
     ">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-        <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#60a5fa);display:grid;place-items:center;font-size:22px;flex-shrink:0;">ðŸ”Œ</div>
+        <div style="width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#60a5fa);display:grid;place-items:center;font-size:22px;flex-shrink:0;">🔌</div>
         <div>
           <h2 style="margin:0;font-size:20px;color:#0f172a;">Connexion Supabase</h2>
-          <p style="margin:0;font-size:13px;color:#64748b;">IKS Maintenance stockage cloud</p>
+          <p style="margin:0;font-size:13px;color:#64748b;">IKS Maintenance — stockage cloud</p>
         </div>
       </div>
       <p style="font-size:13px;color:#475569;margin:14px 0 20px;line-height:1.6;">
-        Renseignez vos identifiants Supabase. Vous les trouverez dans votre dashboard Supabase         <strong>Project Settings API</strong>.
+        Renseignez vos identifiants Supabase. Vous les trouverez dans votre dashboard Supabase →
+        <strong>Project Settings -> API</strong>.
       </p>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <div>
@@ -1591,20 +2331,21 @@ button:disabled {
       </div>
     </div>
   </div>
-  <!-- ••••••••••••••••••••••••••••••••• -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
 
   <script>
 
-  // •••••••••••••••••••••••••••••••••••••
-  // MINI SUPABASE CLIENT plain fetch + WebSocket, no SDK, no DataCloneError
+  // ══════════════════════════════════════════════════════════════════════════
+  // MINI SUPABASE CLIENT — plain fetch + WebSocket, no SDK, no DataCloneError
   // Implements: .from(table).select/insert/update/delete/eq/neq/gte/order/
   //             limit/single/maybeSingle()  +  .channel().on().subscribe()
-  // •••••••••••••••••••••••••••••••••••••
+  // ══════════════════════════════════════════════════════════════════════════
   function createSupabaseClient(projectUrl, anonKey) {
     var baseUrl = projectUrl.replace(/\/$/, '');
     var headers = { 'apikey': anonKey, 'Authorization': 'Bearer ' + anonKey, 'Content-Type': 'application/json', 'Prefer': '' };
 
-    // ”€ REST query builder ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    function QueryBuilder(table) {
+    // ── REST query builder ─────────────────────────────────────────────────
+    function QueryBuilder(table) {
       this._table   = table;
       this._method  = 'GET';
       this._body    = null;
@@ -1696,7 +2437,8 @@ button:disabled {
       }
     };
 
-    // ”€ Realtime via raw WebSocket ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    function RealtimeChannel(name, client) {
+    // ── Realtime via raw WebSocket ─────────────────────────────────────────
+    function RealtimeChannel(name, client) {
       this._name = name;
       this._client = client;
       this._listeners = [];
@@ -1741,7 +2483,7 @@ button:disabled {
           var msg = JSON.parse(ev.data);
           
           if (msg.event !== "phx_reply" && msg.event !== "heartbeat") {
-            console.log("ðŸ“¥ DATABASE SIGNAL RECEIVED:", msg);
+            console.log("📥 DATABASE SIGNAL RECEIVED:", msg);
           }
 
           if (msg.event === 'postgres_changes') {
@@ -1776,7 +2518,8 @@ button:disabled {
       return this;
     };
 
-    // ”€ Public client object ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    var _channels = [];
+    // ── Public client object ───────────────────────────────────────────────
+    var _channels = [];
     return {
       from: function(table) { return new QueryBuilder(table); },
       channel: function(name) {
@@ -1791,11 +2534,13 @@ button:disabled {
       }
     };
   }
-  // • END MINI CLIENT •••••••••••••••••••••••••••    // • SUPABASE LAYER •••••••••••••••••••••••••    var _supabase = null;
+  // ══ END MINI CLIENT ═══════════════════════════════════════════════════════
+    // ══ SUPABASE LAYER ═══════════════════════════════════════════════════
+    var _supabase = null;
     var _supabaseReady = false;
     var _realtimeChannel = null;
 
-    // Table names (create these in Supabase see SQL below)
+    // Table names (create these in Supabase — see SQL below)
     const SB_TICKETS       = 'iks_tickets';
     const SB_TECHNICIANS   = 'iks_technicians';
     const SB_OPERATORS     = 'iks_operators';
@@ -1828,7 +2573,7 @@ button:disabled {
         return;
       }
 
-      document.getElementById('sbConnectBtn').textContent = 'Connexion;
+      document.getElementById('sbConnectBtn').textContent = 'Connexion…';
       document.getElementById('sbConnectBtn').disabled = true;
 
       try {
@@ -1874,7 +2619,7 @@ button:disabled {
       toggleIssueAutre();
       renderTouchMachinePicker();
       renderTouchIssuePicker();
-      addLog('Application connectée Ã  Supabase.');
+      addLog('Application connectée à Supabase.');
       addLog('Le mur des mécaniciens est prêt.');
       if (shouldRunSelfTests()) runSelfTests();
       render();
@@ -1907,7 +2652,7 @@ button:disabled {
 	  
 	  var fb = byId('operatorSelectedFeedback');
 	  if (fb) {
-		fb.innerHTML = 'ðŸ‘¤ Déclarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearOperatorSelection()">/button>';
+		fb.innerHTML = 'Déclarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearOperatorSelection()">X</button>';
 		fb.style.display = 'flex';
 	  }
 	  
@@ -1927,34 +2672,34 @@ button:disabled {
 	  if (realtimeSubscribed) return;
 	  realtimeSubscribed = true;
 
-	  console.log("ðŸ“¡ Ear is listening to Supabase...");
+	  console.log("📡 Ear is listening to Supabase...");
 
 	  _realtimeChannel = _supabase.channel('iks-realtime')
 		.on('postgres_changes', { event: '*', schema: 'public', table: 'iks_tickets' }, function (change) {
-		  console.log("ðŸŽ« Ticket Change!", change.type);
+		  console.log("🎫 Ticket Change!", change.type);
 		  
 		  setTimeout(() => { sbLoadState().then(render); }, 400);
 
 		  if (change.type === 'INSERT') {
 			const data = change.new || change.record;
 			if (data) {
-			  sendBrowserNotif("ðŸ› ï¸ Nouvelle intervention", "Machine: " + data.machine);
+			  sendBrowserNotif("🛠️ Nouvelle intervention", "Machine: " + data.machine);
 			}
 		  }
 		})
 		.on('postgres_changes', { event: '*', schema: 'public', table: 'iks_transport_requests' }, function() {
-		  console.log("ðŸš› Transport Sync...");
+		  console.log("🚛 Transport Sync...");
 		  sbLoadTransportRequests();
 		})
 		.on('postgres_changes', { event: '*', schema: 'public', table: 'iks_machines' }, () => sbLoadMachines())
 		.on('postgres_changes', { event: '*', schema: 'public', table: 'iks_operators' }, () => sbLoadOperators())
 		
 		.subscribe((status) => {
-		  console.log("ðŸ”Œ Connection Status:", status);
+		  console.log("Connection Status:", status);
 		});
 	}
 
-    // ”€ Supabase CRUD helpers ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
+    // ── Supabase CRUD helpers ──────────────────────────────────────────────
 
     async function sbLoadState() {
 	  try {
@@ -2016,7 +2761,7 @@ button:disabled {
 		  reported_issue: ticket.reportedIssue || ''
 		};
 
-		console.log("ðŸ“¤ Syncing to Supabase...", row);
+		console.log("📤 Syncing to Supabase...", row);
 
 		let res;
 		if (ticket._sbId) {
@@ -2267,7 +3012,7 @@ button:disabled {
         }
       } catch(e) {}
     }());
-    // • END SUPABASE LAYER ••••••••••••••••••••••••
+    // ══ END SUPABASE LAYER ════════════════════════════════════════════════
 
     const DEFAULT_TECHNICIANS = [
       { id: '3833', name: 'Mohmed Yassine', role: 'Technicien machine a coudre', shift: 'Equipe A', initials: 'MY', colorA: '#1d4ed8', colorB: '#60a5fa' },
@@ -2449,7 +3194,7 @@ button:disabled {
       }, 0) + 1;
     }
 
-    // ”€ localStorage Supabase adapters ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
+    // ── localStorage -> Supabase adapters ────────────────────────────────
     function saveTechnicians() { sbSaveTechnicians(); }
     function saveOperators()   { sbSaveOperators(); }
     function saveMachines()    { sbSaveMachines(); }
@@ -2975,7 +3720,7 @@ button:disabled {
 	}
 
     function loadState() {
-      // Data already loaded from Supabase during init always return true to skip seedDemoData
+      // Data already loaded from Supabase during init — always return true to skip seedDemoData
       return tickets.length > 0;
     }
 
@@ -3021,7 +3766,7 @@ button:disabled {
         if (draft.machine) {
           var fb = byId('machineSelectedFeedback');
           if (fb) {
-            fb.innerHTML = 'Machine : <strong>' + escapeHtml(draft.machine) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">/button>';
+            fb.innerHTML = 'Machine : <strong>' + escapeHtml(draft.machine) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">X</button>';
             fb.style.display = 'flex';
           }
         }
@@ -3124,7 +3869,7 @@ button:disabled {
           return;
         }
       }
-      // Fallback: treat as legacy flat value try to find which piece it belongs to
+      // Fallback: treat as legacy flat value — try to find which piece it belongs to
       var foundPiece = null;
       Object.keys(issueCatalogue).forEach(function(p) {
         if (issueCatalogue[p].some(function(prob) { return (p + ' - ' + prob) === flatValue; })) {
@@ -3230,7 +3975,8 @@ button:disabled {
       if (typeof renderTouchIssuePicker === 'function') renderTouchIssuePicker();
     }
 
-    // ”€ Two-level picker state ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€    var _selectedPiece = '';
+    // ── Two-level picker state ─────────────────────────────────────────────
+    var _selectedPiece = '';
     var _pieceDropdownOpen = false;
 
     function _getPieceNames() {
@@ -3238,7 +3984,7 @@ button:disabled {
     }
 
     function renderPiecePicker() {
-      // Nothing to render into DOM on initial load picker is event-driven.
+      // Nothing to render into DOM on initial load — picker is event-driven.
       // Just reset state if no piece selected.
       if (!_selectedPiece) {
         _clearPickerUI();
@@ -3291,7 +4037,7 @@ button:disabled {
       var dd = byId('pieceDropdown');
       if (!pieces.length) {
         dd.innerHTML = '<div style="padding:12px 14px;color:#64748b;font-size:13px;">Aucune pièce trouvée</div>' +
-          '<div style="padding:0 12px 12px;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;">Ajouter une nouvelle pièce</button></div>';
+          '<div style="padding:0 12px 12px;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;">+ Ajouter une nouvelle pièce</button></div>';
         return;
       }
       dd.innerHTML = pieces.map(function(p) {
@@ -3304,7 +4050,7 @@ button:disabled {
           '<span style="font-size:12px;color:#64748b;">' + problems.length + ' problème(s)</span>' +
           '</div>';
       }).join('') +
-      '<div style="padding:8px 12px;border-top:1px solid #f1f5f9;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;font-size:12px;">Nouvelle pièce</button></div>';
+      '<div style="padding:8px 12px;border-top:1px solid #f1f5f9;"><button type="button" class="small-btn" onclick="openIssueTypeManagerModal()" style="width:100%;font-size:12px;">+ Nouvelle pièce</button></div>';
     }
 
     window.selectPiece = function selectPiece(pieceName) {
@@ -3316,7 +4062,7 @@ button:disabled {
       byId('pieceSearchContainer').style.display = 'none';
       var badge = byId('pieceSelectedBadge');
       badge.style.display = 'flex';
-      byId('pieceSelectedLabel').textContent = 'ðŸ”§ ' + pieceName;
+      byId('pieceSelectedLabel').textContent = '🔧 ' + pieceName;
       // Populate problème dropdown
       var problems = (issueCatalogue[pieceName] || []).slice();
       var opts = '<option value="">Choisir le problème</option>';
@@ -3375,7 +4121,7 @@ button:disabled {
           '<span>' + escapeHtml(p) + '</span>' +
           '<span style="display:flex;align-items:center;gap:4px;">' +
             '<span style="font-size:11px;color:#64748b;">' + (issueCatalogue[p] || []).length + '</span>' +
-            (p !== 'Autre piece' ? '<button type="button" onclick="removePiece(\'' + safeP + '\');event.stopPropagation();" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 2px;line-height:1;" title="Supprimer">/button>' : '') +
+            (p !== 'Autre piece' ? '<button type="button" onclick="removePiece(\'' + safeP + '\');event.stopPropagation();" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 2px;line-height:1;" title="Supprimer">X</button>' : '') +
           '</span>' +
         '</div>';
       }).join('');
@@ -3388,11 +4134,11 @@ button:disabled {
       var addForm = byId('addProblemForm');
       if (!piece) {
         if (pLabel) pLabel.textContent = '';
-        pList.innerHTML = '<div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;">Sélectionnez une pièce</div>';
+        pList.innerHTML = '<div style="color:#94a3b8;font-size:13px;padding:20px 0;text-align:center;"><- Sélectionnez une pièce</div>';
         if (addForm) addForm.style.display = 'none';
         return;
       }
-      if (pLabel) pLabel.textContent = '' + piece;
+      if (pLabel) pLabel.textContent = '– ' + piece;
       if (addForm) addForm.style.display = 'block';
       var problems = issueCatalogue[piece] || [];
       if (!problems.length) {
@@ -3404,7 +4150,7 @@ button:disabled {
         var safeProb = prob.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         return '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-radius:10px;background:#fff;border:1px solid #e2e8f0;font-size:13px;">' +
           '<span>' + escapeHtml(prob) + '</span>' +
-          '<button type="button" onclick="removeProblem(\'' + safePiece + '\',\'' + safeProb + '\')" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 4px;line-height:1;" title="Supprimer">/button>' +
+          '<button type="button" onclick="removeProblem(\'' + safePiece + '\',\'' + safeProb + '\')" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 4px;line-height:1;" title="Supprimer">X</button>' +
         '</div>';
       }).join('');
     }
@@ -3420,7 +4166,7 @@ button:disabled {
     window.addNewPiece = function addNewPiece() {
       var val = (byId('newPieceInput').value || '').trim();
       if (!val) { alert('Merci de saisir le nom de la pièce.'); return; }
-      if (issueCatalogue[val]) { alert('Cette pièce existe déjÃ .'); return; }
+      if (issueCatalogue[val]) { alert('Cette pièce existe déjà.'); return; }
       issueCatalogue[val] = [];
       saveIssueTypes();
       populateIssueTypeSelects();
@@ -3446,7 +4192,7 @@ button:disabled {
       if (!piece) { alert('Sélectionnez une pièce d\'abord.'); return; }
       if (!val) { alert('Merci de saisir le problème.'); return; }
       if (!issueCatalogue[piece]) issueCatalogue[piece] = [];
-      if (issueCatalogue[piece].includes(val)) { alert('Ce problème existe déjÃ .'); return; }
+      if (issueCatalogue[piece].includes(val)) { alert('Ce problème existe déjà.'); return; }
       issueCatalogue[piece].push(val);
       saveIssueTypes();
       populateIssueTypeSelects();
@@ -3464,7 +4210,7 @@ button:disabled {
       renderCatalogueProblemList();
     };
 
-    function renderIssueTypeList() { /* legacy stub catalogue replaces this */ }
+    function renderIssueTypeList() { /* legacy stub — catalogue replaces this */ }
 
     window.openIssueTypeManagerModal = function openIssueTypeManagerModal() {
       _catalogueActivePiece = _catalogueActivePiece || Object.keys(issueCatalogue)[0] || null;
@@ -3488,7 +4234,7 @@ button:disabled {
       populateIssueTypeSelects();
     };
 
-    window.saveIssueType = function saveIssueType() { /* legacy stub use addNewProblem() */ };
+    window.saveIssueType = function saveIssueType() { /* legacy stub — use addNewProblem() */ };
 
     function updateClock() {
       byId('currentTime').textContent = new Date().toLocaleTimeString('fr-FR', {
@@ -3625,16 +4371,18 @@ button:disabled {
         .slice(0, limit);
     }
 
-    /* •••••••••••••••••••••••••••       NEW KPI FUNCTIONS MTBF Â· MTTR Â· TD Â· IPR
-       •••••••••••••••••••••••••••
+    /* ═══════════════════════════════════════════════════════
+       NEW KPI FUNCTIONS — MTBF · MTTR · TD · IPR
+       ═══════════════════════════════════════════════════════
+
        Timestamps used:
-         createdAt  failure time
-         startedAt  intervention start
-         closedAt   intervention end
+         createdAt  -> failure time
+         startedAt  -> intervention start
+         closedAt   -> intervention end
 
        Repair Time   = closedAt  - startedAt
        Inter-failure = next createdAt - previous closedAt (or previous createdAt if no closedAt)
-    •••••••••••••••••••••••••••*/
+    ═══════════════════════════════════════════════════════ */
 
     /**
      * computeAdvancedKPIs(records)
@@ -3666,7 +4414,7 @@ button:disabled {
       // Fall back to full dataset when no month slice is supplied
       var scopeRecords = (monthRecords && monthRecords.length) ? monthRecords : allRecords;
 
-      // ”€ MTTR : closed tickets in the selected month ”€
+      // ── MTTR : closed tickets in the selected month ──
       var repairTimes = scopeRecords.filter(function(r) {
         return r.startedAt && r.closedAt && r.closedAt > r.startedAt;
       }).map(function(r) {
@@ -3677,7 +4425,7 @@ button:disabled {
         ? Math.round(repairTimes.reduce(function(s, v) { return s + v; }, 0) / repairTimes.length)
         : 0;
 
-      // ”€ MTBF : inter-failure intervals anchored to the selected month ”€
+      // ── MTBF : inter-failure intervals anchored to the selected month ──
       // Build a set of IDs from scopeRecords for quick lookup
       var scopeIds = {};
       scopeRecords.forEach(function(r) { if (r.id) scopeIds[r.id] = true; });
@@ -3707,7 +4455,7 @@ button:disabled {
         ? Math.round(allOperatingIntervals.reduce(function(s, v) { return s + v; }, 0) / allOperatingIntervals.length)
         : 0;
 
-      // ”€ TD and IPR ”€
+      // ── TD and IPR ──
       // Use null to distinguish "not enough data" from a genuine 0 value
       var tdPct = (mtbfMs && mttrMs) ? (mtbfMs / (mtbfMs + mttrMs)) * 100
                 : (mtbfMs ? 100 : null);
@@ -3723,7 +4471,7 @@ button:disabled {
 
     /**
      * computeMachineKPIs(records)
-     * Returns a map { machineName { mtbfMs, mttrMs, tdPct, ipr, failureCount, isDecreasing } }
+     * Returns a map { machineName -> { mtbfMs, mttrMs, tdPct, ipr, failureCount, isDecreasing } }
      * Used for per-machine health classification and maintenance decision.
      *
      * "isDecreasing MTBF" is detected by comparing:
@@ -3794,13 +4542,13 @@ button:disabled {
 
     /**
      * getMachineMaintenanceDecision(machineKpi, globalMtbfMs, globalMttrMs)
-     * Returns { type, label, cssClass } where type 'corrective'|'predictive'|'inefficace'|'stable'
+     * Returns { type, label, cssClass } where type ∈ 'corrective'|'predictive'|'inefficace'|'stable'
      *
      * Rules (applied in priority order):
-     *  1. MTTR high (>2Ã— global MTTR)          "Maintenance inefficace"
-     *  2. MTBF low (< 50% global) AND fails  "Maintenance corrective"
-     *  3. MTBF decreasing trend                 "Maintenance prédictive"
-     *  4. Otherwise                             "Stable"
+     *  1. MTTR high (>2× global MTTR)          -> "Maintenance inefficace"
+     *  2. MTBF low (< 50% global) AND ≥3 fails  -> "Maintenance corrective"
+     *  3. MTBF decreasing trend                 -> "Maintenance prédictive"
+     *  4. Otherwise                             -> "Stable"
      */
     function getMachineMaintenanceDecision(machineKpi, globalMtbfMs, globalMttrMs) {
       var highMttrThreshold  = globalMttrMs  ? globalMttrMs  * 2 : 0;
@@ -3822,9 +4570,9 @@ button:disabled {
      * getMachineHealthStatus(tdPct)
      * Returns { label, cssClass } based on Availability Rate thresholds.
      *
-     *  TD 90%        "Bonne disponibilité"   (green)
-     *  70% TD < 90%  "Surveillance requise"  (amber)
-     *  TD < 70%        "Maintenance urgente"   (red)
+     *  TD ≥ 90%        -> "Bonne disponibilité"   (green)
+     *  70% ≤ TD < 90%  -> "Surveillance requise"  (amber)
+     *  TD < 70%        -> "Maintenance urgente"   (red)
      */
     function getMachineHealthStatus(tdPct) {
       if (tdPct == null) return { label: 'Données insuffisantes', cssClass: 'health-chip' };
@@ -3833,7 +4581,7 @@ button:disabled {
       return { label: 'Maintenance urgente', cssClass: 'health-chip health-urgent' };
     }
 
-    /* •••••••••••••••••••••••••••*/
+    /* ═══════════════════════════════════════════════════════ */
 
     function buildMachineTtfStats(records) {
       const byMachine = {};
@@ -4128,8 +4876,8 @@ button:disabled {
               '<div class="ticket-actions">' +
                 (ticket.status === 'Ouvert' ? '<button class="small-btn" onclick="startTicket(\'' + ticket.id + '\')">Affecter</button>' : '') +
                 (ticket.status === 'En cours' ? '<button class="small-btn success" onclick="closeTicket(\'' + ticket.id + '\')">Cloturer</button>' : '') +
-                (ticket.status !== 'Ouvert' ? '<button class="small-btn edit" onclick="openEditIntervention(\'' + ticket.id + '\')">¸ Modifier les horaires</button>' : '') +
-                '<button class="small-btn danger-soft" onclick="deleteTicket(\'' + ticket.id + '\')">ðŸ—‘ï¸ Supprimer</button>' +
+                (ticket.status !== 'Ouvert' ? '<button class="small-btn edit" onclick="openEditIntervention(\'' + ticket.id + '\')">Modifier les horaires</button>' : '') +
+                '<button class="small-btn danger-soft" onclick="deleteTicket(\'' + ticket.id + '\')">🗑️ Supprimer</button>' +
               '</div>' +
             '</div>' +
           '</article>';
@@ -4200,12 +4948,12 @@ button:disabled {
       if (countBadge) countBadge.textContent = referenceMonthRecords.length ? referenceMonthRecords.length + ' intervention(s)' : 'Aucune donnee';
       byId('indicatorTopMachinesTitle').textContent = 'Machines anormales - ' + formatMonthLabel(referenceDate);
 
-      // ”€ New advanced KPIs ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
+      // ── New advanced KPIs ──────────────────────────────────────────────
       var advKpi = computeAdvancedKPIs(indicatorRecords, referenceMonthRecords);
-      byId('indicatorMTBF').textContent = advKpi.mtbfMs != null ? formatDurationSmart(advKpi.mtbfMs) : ';
-      byId('indicatorMTTR').textContent = advKpi.mttrMs != null ? formatDurationSmart(advKpi.mttrMs) : ';
-      byId('indicatorTD').textContent   = advKpi.tdPct  != null ? advKpi.tdPct.toFixed(1) + ' %'     : ';
-      byId('indicatorIPR').textContent  = advKpi.ipr    != null ? advKpi.ipr.toFixed(2)               : ';
+      byId('indicatorMTBF').textContent = advKpi.mtbfMs != null ? formatDurationSmart(advKpi.mtbfMs) : '—';
+      byId('indicatorMTTR').textContent = advKpi.mttrMs != null ? formatDurationSmart(advKpi.mttrMs) : '—';
+      byId('indicatorTD').textContent   = advKpi.tdPct  != null ? advKpi.tdPct.toFixed(1) + ' %'     : '—';
+      byId('indicatorIPR').textContent  = advKpi.ipr    != null ? advKpi.ipr.toFixed(2)               : '—';
 
       // Color the TD value by health threshold
       var tdEl = byId('indicatorTD');
@@ -4263,7 +5011,7 @@ button:disabled {
           }).join('')
         : '<div class="empty-state">Les recommandations apparaitront automatiquement avec les donnees.</div>';
 
-      // ”€ Machines anormales enrichies (health + maintenance decision) ”€
+      // ── Machines anormales enrichies (health + maintenance decision) ──
       var machineKpiMap = computeMachineKPIs(indicatorRecords);
       byId('indicatorTopMachines').innerHTML = abnormalMachines.length
         ? abnormalMachines.map(function(item, index) {
@@ -4424,7 +5172,7 @@ button:disabled {
 			  </select>
 			</div>
 
-			<button class="small-btn danger-soft" onclick="removeMachine(${index})" title="Supprimer définitivement">ðŸ—‘ï¸</button>
+			<button class="small-btn danger-soft" onclick="removeMachine(${index})" title="Supprimer définitivement">🗑️</button>
 		  </div>`;
 	  }).join('');
 	}
@@ -4788,7 +5536,7 @@ button:disabled {
 		};
 	  }).filter(item => item.name !== "");
 
-	  console.log("ðŸ“‹ Parsed with 3-column support:", parsedData);
+	  console.log("📋 Parsed with 3-column support:", parsedData);
 	  importMachines(parsedData, 'le collage');
 	  byId('machinePasteInput').value = '';
 	};
@@ -4818,7 +5566,7 @@ button:disabled {
 		  };
 		}).filter(item => item.name !== "");
 
-		console.log("ðŸ“„ Parsed from File:", parsedData);
+		console.log("📄 Parsed from File:", parsedData);
 		importMachines(parsedData, file.name);
 		byId('machineImportFile').value = '';
 	  } catch (error) {
@@ -5599,7 +6347,7 @@ button:disabled {
       if (ticket.closedAt) ticket.closedAt = newClosedAt;
 
       if (changes.length > 0) {
-        addLog('Correction horaires intervention ' + ticket.id + ' ' + changes.join(', ') + '.');
+        addLog('Correction horaires intervention ' + ticket.id + ' — ' + changes.join(', ') + '.');
       }
 
       cancelEditIntervention();
@@ -5861,7 +6609,7 @@ button:disabled {
       }
     };
 
-    // ”€ Touch Machine Picker ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
+    // ── Touch Machine Picker ──────────────────────────────────────────────
     var _touchSelectedLetter = null;
 
     function renderTouchMachinePicker() {
@@ -5874,7 +6622,7 @@ button:disabled {
 		_activeMachineLetter = null;
 		container.innerHTML = `
 		  <div style="padding: 20px; border: 2px dashed #cbd5e1; border-radius: 16px; text-align: center; color: #64748b;">
-			<span style="font-size: 24px; display: block; margin-bottom: 8px;">ðŸ‘¤</span>
+			<span style="font-size: 24px; display: block; margin-bottom: 8px;">👤</span>
 			Veuillez d'abord sélectionner <strong>qui déclare la panne</strong>.
 		  </div>`;
 		return;
@@ -5887,7 +6635,7 @@ button:disabled {
 	  if (!filtered.length) {
 		container.innerHTML = `
 		  <div style="padding: 20px; border: 2px solid #fee2e2; background: #fffafb; border-radius: 16px; text-align: center; color: #b91c1c;">
-			Aucune machine n'est assignée Ã  <strong>${escapeHtml(selectedOp)}</strong>.
+			Aucune machine n'est assignée à <strong>${escapeHtml(selectedOp)}</strong>.
 		  </div>`;
 		return;
 	  }
@@ -5974,7 +6722,7 @@ button:disabled {
 	  
 	  var fb = byId('machineSelectedFeedback');
 	  if (fb) {
-		fb.innerHTML = 'Machine : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">/button>';
+		fb.innerHTML = 'Machine : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearMachineSelection()">X</button>';
 		fb.style.display = 'flex';
 	  }
 	};
@@ -5987,7 +6735,7 @@ button:disabled {
       if (fb) fb.style.display = 'none';
     };
 
-    // ”€ Touch Issue Picker ”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€”€
+    // ── Touch Issue Picker ────────────────────────────────────────────────
     var _touchSelectedPiece = null;
 
     function renderTouchIssuePicker() {
@@ -6010,8 +6758,8 @@ button:disabled {
         // Show back button + problem tiles
         var problems = issueCatalogue[_touchSelectedPiece] || [];
         var currentIssue = byId('issue').value;
-        var html = '<button type="button" class="touch-back-btn" onclick="touchClearPiece()">Retour</button>';
-        html += '<div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:8px;">ðŸ”§ ' + escapeHtml(_touchSelectedPiece) + ' Choisir le problème :</div>';
+        var html = '<button type="button" class="touch-back-btn" onclick="touchClearPiece()"><- Retour</button>';
+        html += '<div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:8px;">🔧 ' + escapeHtml(_touchSelectedPiece) + ' — Choisir le problème :</div>';
         html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">';
         problems.forEach(function(prob) {
           var fullVal = _touchSelectedPiece + ' - ' + prob;
@@ -6053,7 +6801,7 @@ button:disabled {
       // Show feedback badge
       var fb = byId('issueSelectedFeedback');
       if (fb) {
-        fb.innerHTML = 'Panne : <strong>' + escapeHtml(fullVal) + '</strong> <button class="touch-clear-btn" onclick="touchClearPiece()">/button>';
+        fb.innerHTML = 'Panne : <strong>' + escapeHtml(fullVal) + '</strong> <button class="touch-clear-btn" onclick="touchClearPiece()">X</button>';
         fb.style.display = 'flex';
       }
       // Update tile active states
@@ -6062,13 +6810,13 @@ button:disabled {
       });
     };
 
-    // Bootstrap is handled asynchronously by connectSupabase() initAppFromSupabase()
+    // Bootstrap is handled asynchronously by connectSupabase() -> initAppFromSupabase()
     // The Supabase banner is shown on load; credentials auto-connect if previously saved.
     // Initialize clock immediately so it ticks while Supabase connects:
     updateClock();
     setInterval(updateClock, 1000);
 
-    // • NOTIFICATION SYSTEM •••••••••••••••••••••••••
+    // ══ NOTIFICATION SYSTEM ══════════════════════════════════════════════════
 
     var _notifToastTimer = null;
 
@@ -6090,7 +6838,7 @@ button:disabled {
     }
 
     function sendBrowserNotif(title, body) {
-	  showNotifToast('ðŸ”” ' + title + ' ' + body);
+	  showNotifToast('🔔 ' + title + ' — ' + body);
 
 	  if (!("Notification" in window)) return;
 
@@ -6112,7 +6860,7 @@ button:disabled {
 	  }
 	}
 
-    // • TRANSPORT MODULE ••••••••••••••••••••••••••
+    // ══ TRANSPORT MODULE ════════════════════════════════════════════════════
     var isTransportAdminUnlocked = false;
     var TRANSPORT_ADMIN_PASSWORD = 'prod123';
 
@@ -6136,7 +6884,7 @@ button:disabled {
       byId('transportOperator').value = name;
       var fb = byId('transportOperatorFeedback');
       if (fb) {
-        fb.innerHTML = 'ðŸ‘¤ Déclarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearTransportOperator()">/button>';
+        fb.innerHTML = 'Déclarant : <strong>' + escapeHtml(name) + '</strong> <button class="touch-clear-btn" onclick="clearTransportOperator()">X</button>';
         fb.style.display = 'flex';
       }
       renderTransportOperatorPicker();
@@ -6300,7 +7048,7 @@ button:disabled {
         return;
       }
       container.innerHTML = transportRequests.map(function(req) {
-        var statusLabel = req.status === 'pending' ? 'En attente' : req.status === 'accepted' ? 'Acceptée' : 'Rejetée';
+        var statusLabel = req.status === 'pending' ? '⏳ En attente' : req.status === 'accepted' ? 'Acceptée' : 'Rejetée';
         var dateStr = req.created_at ? new Date(req.created_at).toLocaleString('fr-FR') : '-';
         var actionsHtml = '';
         if (req.status === 'pending') {
@@ -6310,20 +7058,20 @@ button:disabled {
               '<button class="reject-btn" style="border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;" onclick="rejectTransportRequest(\'' + req.id + '\')">Rejeter</button>' +
               '</div>';
           } else {
-            actionsHtml = '<div><button class="small-btn" onclick="openTransportAdminAccess()" style="font-size:12px;">ðŸ” Valider</button></div>';
+            actionsHtml = '<div><button class="small-btn" onclick="openTransportAdminAccess()" style="font-size:12px;">🔐 Valider</button></div>';
           }
         }
         return '<div class="transport-request-card ' + req.status + '">' +
           '<div>' +
             '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">' +
-              '<strong style="font-size:16px;">ðŸš› ' + escapeHtml(req.machine) + '</strong>' +
+              '<strong style="font-size:16px;">🚛 ' + escapeHtml(req.machine) + '</strong>' +
               '<span style="padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;' +
                 (req.status === 'pending' ? 'background:#fef3c7;color:#92400e;' : req.status === 'accepted' ? 'background:#dcfce7;color:#15803d;' : 'background:#fee2e2;color:#b91c1c;') + '">' +
                 statusLabel + '</span>' +
             '</div>' +
-            '<p style="margin:0;font-size:13px;color:#475569;">ðŸ‘¤ Déclarant : <strong>' + escapeHtml(req.operator) + '</strong></p>' +
-            '<p style="margin:4px 0 0;font-size:12px;color:#94a3b8;">ðŸ• ' + dateStr + '</p>' +
-            (req.status === 'accepted' ? '<p style="margin:6px 0 0;font-size:13px;color:#15803d;font-weight:700;">Machine affectée Ã  ' + escapeHtml(req.operator) + '</p>' : '') +
+            '<p style="margin:0;font-size:13px;color:#475569;">Déclarant : <strong>' + escapeHtml(req.operator) + '</strong></p>' +
+            '<p style="margin:4px 0 0;font-size:12px;color:#94a3b8;">🕐 ' + dateStr + '</p>' +
+            (req.status === 'accepted' ? '<p style="margin:6px 0 0;font-size:13px;color:#15803d;font-weight:700;">Machine affectée à ' + escapeHtml(req.operator) + '</p>' : '') +
           '</div>' +
           actionsHtml +
         '</div>';
@@ -6345,7 +7093,7 @@ button:disabled {
 
 		setInterval(() => {
 			if (!_realtimeChannel || _realtimeChannel._ws.readyState !== 1) {
-				console.log("ðŸ’“ Reconnecting mobile sync...");
+				console.log("💓 Reconnecting mobile sync...");
 				realtimeSubscribed = false; 
 				subscribeRealtime();
 			}
@@ -6354,17 +7102,16 @@ button:disabled {
 	
 	if ('serviceWorker' in navigator) {
 	  navigator.serviceWorker.register('sw.js').then(function() {
-		console.log("ðŸ“± Mobile Service Worker Registered!");
+		console.log("📱 Mobile Service Worker Registered!");
 	  });
 	}
   </script>
 
   <!-- In-app notification toast -->
   <div id="notifToast" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9999;align-items:center;gap:12px;padding:14px 18px;border-radius:16px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff;box-shadow:0 16px 40px rgba(29,78,216,0.32);font-size:14px;font-weight:600;max-width:340px;">
-    <span style="font-size:22px;">ðŸ””</span>
+    <span style="font-size:22px;">🔔</span>
     <span id="notifToastMsg"></span>
-    <button onclick="this.parentElement.style.display='none'" style="border:none;background:rgba(255,255,255,0.2);color:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;font-size:12px;font-weight:700;margin-left:auto;">/button>
+    <button onclick="this.parentElement.style.display='none'" style="border:none;background:rgba(255,255,255,0.2);color:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;font-size:12px;font-weight:700;margin-left:auto;">X</button>
   </div>
 </body>
 </html>
-
